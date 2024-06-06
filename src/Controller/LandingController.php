@@ -61,14 +61,14 @@ class LandingController extends AbstractController
 
         $content = $this->postFetchService->fetchBlogPost();
 
+        if (!is_object($content)) {
+            $content = ['error' => 'failed to get data from blogs'];
+        }
+
         return $this->render('landing/index.html.twig', [
             'navItems' => $navItems,
             'blogForm' => $blogForm->createView(),
-            'blog_posts' => [
-                'title' => $content['title'],
-                'content' => $content['content'],
-                'date' => $content['date']
-            ]
+            'blog_posts' => $content
         ]);
     }
 
