@@ -47,4 +47,28 @@ class LandingController extends AbstractController
             'blogForm' => $blogForm->createView()
         ]);
     }
+
+    #[Route('/blog/post/{id}', name: 'app_blog_posts', methods: ['POST'])]
+    function getBlogPosts(Request $request, EntityManagerInterface $em): JsonResponse
+    {
+        $id = $request->get('id');
+        if (is_nan($id)) {
+            return new JsonResponse([
+                'error' => "ID isn't numeric"
+            ]);
+        }
+
+        $blogPost = $em->getRepository(Blogs::class)->find($request->get('id'));
+        if ($blogPost) {
+            return new JsonResponse([
+                'title' => $blogPost->getTitle(),
+                'content' => $blogPost->getContent(),
+                'date' => $blogPost->getDate()
+            ]);
+        } else {
+            return new JsonResponse([
+               'message' => 'nothing found'
+           ]);
+       }
+    }
 }
