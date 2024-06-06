@@ -14,18 +14,28 @@ class LandingController extends AbstractController
     #[Route('/landing', name: 'app_landing')]
     public function index(): Response
     {
-        //db mock
-        $navItems = [
-            ['name' => 'Home', 'url' => '/', 'allowed' => 0],
-            ['name' => 'Post', 'url' => '/post', 'allowed' => 0]
-        ];
-
         $blogForm = $this->createForm(BlogPostFormType::class);
 
         if ($blogForm->isSubmitted() && $blogForm->isValid()) {
             $blogs = new Blogs();
-            return new JsonResponse(['message' => 'Blog post created!'], 200);
+
+            //set blog data
+            $blogs->setTitle($blogForm->get('title')->getData());
+            $blogs->setContent($blogForm->get('content')->getData());
+            $blogs->setDate($blogForm->get('date')->getData());
+
+            return new JsonResponse(['message' => 'Blog post created!', 'data' => [
+                'title' => $blogs->getTitle(),
+                'content' => $blogs->getContent(),
+                'date' => $blogs->getDate()
+
+            ]], 200);
         }
+
+        $navItems = [
+            ['name' => 'Home', 'url' => '/', 'allowed' => 0],
+            ['name' => 'Post', 'url' => '/post', 'allowed' => 0]
+        ];
 
         //fetch allowed nev items from db?
         return $this->render('landing/index.html.twig', [
