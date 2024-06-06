@@ -3,6 +3,10 @@
     padding: 0;
 }
 
+html {
+    background-color: #f1f1c5;
+}
+
 .nav-wrapper {
     display: flex;
     justify-content: center;
@@ -48,7 +52,7 @@
     justify-content: center;
     height: 100%;
     width: 50%;
-    background: #adffff;
+    background: #36a9a9;
     color: black;
     padding-left: 10px;
     padding-right: 10px;
@@ -65,16 +69,40 @@
     display: block;
 }
 
+.form form button {
+    background-color: white;
+    border: none;
+    width: 20vw;
+    height: 2.5vh;
+    border-radius: 10px;
+    margin-top: 0.4rem;
+}
+
+.form form button:hover {
+    transition: 0.5s ease-in;
+    background-color: darkorange;
+}
+
 .form form input {
     display: block;
     margin-top: 0.5rem;
     margin-bottom: 0.5rem;
-    width: 10vw;
+    width: 20vw;
+    height: 2.5vh;
+    border: none;
+    border-radius: 10px;
 }
 
 .form .error {
     color: red;
     font-weight: bolder;
+}
+
+.landing-wrapper .table {
+    margin-top: 4.5vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .landing-wrapper .table table tr td {

@@ -13,7 +13,7 @@ use Symfony\Component\Routing\Attribute\Route;
 
 class LandingController extends AbstractController
 {
-    #[Route('/landing', name: 'app_landing')]
+    #[Route('/blog/post', name: 'app_landing')]
     public function index(Request $request, EntityManagerInterface $em): Response
     {
         $blogForm = $this->createForm(BlogPostFormType::class);
