@@ -24,6 +24,9 @@ class BlogPostFormType extends AbstractType
                         'max' => 75,
                         'maxMessage' => 'Title cannot be longer than {{ limit }} characters',
                     ]),
+                ],
+                'attr' => [
+                    'placeholder' => 'Blog post titel'
                 ]
             ])
             ->add('content', null, [
@@ -36,6 +39,9 @@ class BlogPostFormType extends AbstractType
                         'maxMessage' => 'Content cannot be longer than {{ limit }} characters',
                     ]),
                 ],
+                'attr' => [
+                    'placeholder' => 'Uw blog post titel'
+                ]
             ])
             ->add('date', null, [
                 'widget' => 'single_text',

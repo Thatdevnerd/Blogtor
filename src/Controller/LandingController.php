@@ -10,9 +10,26 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Contracts\HttpClient\Exception\ClientExceptionInterface;
+use Symfony\Contracts\HttpClient\Exception\RedirectionExceptionInterface;
+use Symfony\Contracts\HttpClient\Exception\ServerExceptionInterface;
+use Symfony\Contracts\HttpClient\Exception\TransportExceptionInterface;
+use Symfony\Contracts\HttpClient\HttpClientInterface;
 
 class LandingController extends AbstractController
 {
+    private HttpClientInterface $httpClient;
+
+    public function __construct(HttpClientInterface $client, HttpClientInterface $httpClient) {
+        $this->httpClient = $httpClient;
+    }
+
+    /**
+     * @throws TransportExceptionInterface
+     * @throws ServerExceptionInterface
+     * @throws RedirectionExceptionInterface
+     * @throws ClientExceptionInterface
+     */
     #[Route('/blog/post', name: 'app_landing')]
     public function index(Request $request, EntityManagerInterface $em): Response
     {
@@ -41,14 +58,26 @@ class LandingController extends AbstractController
             ['name' => 'Post', 'url' => '/post', 'allowed' => 0]
         ];
 
-        //fetch allowed nev items from db?
+        $response = $this->httpClient->request(
+            'POST',
+            'http://localhost:8000/blog/post/1',
+        );
+
+        $content = json_decode($response->getContent(), true);
+        var_dump($content);
+
         return $this->render('landing/index.html.twig', [
             'navItems' => $navItems,
-            'blogForm' => $blogForm->createView()
+            'blogForm' => $blogForm->createView(),
+            'blog_posts' => [
+                'title' => $content['title'],
+                'content' => $content['content'],
+                'date' => $content['date']
+            ]
         ]);
     }
 
-    #[Route('/blog/post/{id}', name: 'app_blog_posts', methods: ['POST'])]
+    #[Route('/blog/post/{id}', name: 'app_blog_posts')]
     function getBlogPosts(Request $request, EntityManagerInterface $em): JsonResponse
     {
         $id = $request->get('id');
@@ -63,7 +92,7 @@ class LandingController extends AbstractController
             return new JsonResponse([
                 'title' => $blogPost->getTitle(),
                 'content' => $blogPost->getContent(),
-                'date' => $blogPost->getDate()
+                'date' => $blogPost->getDate()->getTimestamp()
             ]);
         } else {
             return new JsonResponse([
