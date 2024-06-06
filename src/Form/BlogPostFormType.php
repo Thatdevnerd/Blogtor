@@ -4,6 +4,7 @@ namespace App\Form;
 
 use App\Entity\Blogs;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\Length;
@@ -44,6 +45,7 @@ class BlogPostFormType extends AbstractType
                     ]),
                 ],
             ])
+            ->add('submit', SubmitType::class)
         ;
     }
 

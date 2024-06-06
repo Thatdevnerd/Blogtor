@@ -20,6 +20,7 @@
        <div class="card">
            <div class="card-body">
                <div class="form">
+
                    {% block form_errors %}
                        <div class="error">
                            <span>error</span>
@@ -30,11 +31,12 @@
                        {{ form_row(blogForm.title) }}
                        {{ form_row(blogForm.content) }}
                        {{ form_row(blogForm.date) }}
-                       <button type="submit">Submit</button>
+                       {{ form_row(blogForm.submit, { 'label': 'Submit me' }) }}
                    {{ form_end(blogForm) }}
                </div>
            </div>
         </div>
     </div>
 </div>
+
 {% endblock %}

@@ -7,20 +7,21 @@ use App\Form\BlogPostFormType;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 
 class LandingController extends AbstractController
 {
     #[Route('/landing', name: 'app_landing')]
-    public function index(EntityManagerInterface $em): Response
+    public function index(Request $request, EntityManagerInterface $em): Response
     {
         $blogForm = $this->createForm(BlogPostFormType::class);
+        $blogForm->handleRequest($request);
 
         if ($blogForm->isSubmitted() && $blogForm->isValid()) {
             $blogs = new Blogs();
 
-            //set blog data
             $blogs->setTitle($blogForm->get('title')->getData());
             $blogs->setContent($blogForm->get('content')->getData());
             $blogs->setDate($blogForm->get('date')->getData());
@@ -32,7 +33,6 @@ class LandingController extends AbstractController
                 'title' => $blogs->getTitle(),
                 'content' => $blogs->getContent(),
                 'date' => $blogs->getDate()
-
             ]], 200);
         }
 
