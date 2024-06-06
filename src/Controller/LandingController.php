@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Blogs;
 use App\Form\BlogPostFormType;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
@@ -12,7 +13,7 @@ use Symfony\Component\Routing\Attribute\Route;
 class LandingController extends AbstractController
 {
     #[Route('/landing', name: 'app_landing')]
-    public function index(): Response
+    public function index(EntityManagerInterface $em): Response
     {
         $blogForm = $this->createForm(BlogPostFormType::class);
 
@@ -23,6 +24,9 @@ class LandingController extends AbstractController
             $blogs->setTitle($blogForm->get('title')->getData());
             $blogs->setContent($blogForm->get('content')->getData());
             $blogs->setDate($blogForm->get('date')->getData());
+
+            $em->persist($blogs);
+            $em->flush();
 
             return new JsonResponse(['message' => 'Blog post created!', 'data' => [
                 'title' => $blogs->getTitle(),
