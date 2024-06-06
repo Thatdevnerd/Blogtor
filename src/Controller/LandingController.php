@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Blogs;
 use App\Form\BlogPostFormType;
+use App\Services\BlogPostFetchService;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -18,10 +19,10 @@ use Symfony\Contracts\HttpClient\HttpClientInterface;
 
 class LandingController extends AbstractController
 {
-    private HttpClientInterface $httpClient;
+    private BlogPostFetchService $postFetchService;
 
-    public function __construct(HttpClientInterface $client, HttpClientInterface $httpClient) {
-        $this->httpClient = $httpClient;
+    public function __construct(HttpClientInterface $client, BlogPostFetchService $postFetchService) {
+        $this->postFetchService = $postFetchService;
     }
 
     /**
@@ -58,13 +59,7 @@ class LandingController extends AbstractController
             ['name' => 'Post', 'url' => '/post', 'allowed' => 0]
         ];
 
-        $response = $this->httpClient->request(
-            'POST',
-            'http://localhost:8000/blog/post/1',
-        );
-
-        $content = json_decode($response->getContent(), true);
-        var_dump($content);
+        $content = $this->postFetchService->fetchBlogPost();
 
         return $this->render('landing/index.html.twig', [
             'navItems' => $navItems,
