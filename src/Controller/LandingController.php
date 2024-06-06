@@ -38,19 +38,19 @@ class LandingController extends AbstractController
         $blogForm->handleRequest($request);
 
         if ($blogForm->isSubmitted() && $blogForm->isValid()) {
-            $blogs = new Blogs();
+            $blogEntity = new Blogs();
 
-            $blogs->setTitle($blogForm->get('title')->getData());
-            $blogs->setContent($blogForm->get('content')->getData());
-            $blogs->setDate($blogForm->get('date')->getData());
+            $blogEntity->setTitle($blogForm->get('title')->getData());
+            $blogEntity->setContent($blogForm->get('content')->getData());
+            $blogEntity->setDate($blogForm->get('date')->getData());
 
-            $em->persist($blogs);
+            $em->persist($blogEntity);
             $em->flush();
 
             return new JsonResponse(['message' => 'Blog post created!', 'data' => [
-                'title' => $blogs->getTitle(),
-                'content' => $blogs->getContent(),
-                'date' => $blogs->getDate()
+                'title' => $blogEntity->getTitle(),
+                'content' => $blogEntity->getContent(),
+                'date' => $blogEntity->getDate()
             ]], 200);
         }
 
@@ -59,16 +59,16 @@ class LandingController extends AbstractController
             ['name' => 'Post', 'url' => '/post', 'allowed' => 0]
         ];
 
-        $content = $this->postFetchService->fetchBlogPost();
+        $blogPost = $this->postFetchService->fetchBlogPost();
 
-        if (!is_object($content)) {
-            $content = ['error' => 'failed to get data from blogs'];
+        if (!is_object($blogPost)) {
+            $blogPost = ['error' => 'failed to get data from blogs'];
         }
 
         return $this->render('landing/index.html.twig', [
             'navItems' => $navItems,
             'blogForm' => $blogForm->createView(),
-            'blog_posts' => $content
+            'blog_posts' => $blogPost
         ]);
     }
 
