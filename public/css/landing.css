@@ -76,3 +76,7 @@
     color: red;
     font-weight: bolder;
 }
+
+.landing-wrapper .table table tr td {
+    color: red;
+}
