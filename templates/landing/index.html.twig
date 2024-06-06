@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+
+<title>Hello LandingController!</title>
+
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset('css/landing.css') }}">
+{% endblock %}
+
+{% block body %}
+
+<div>
+    <nav class="nav-wrapper">
+        <ul>
+            {% for item in navItems %}
+                <li>{{ item.name }}</li>
+            {% endfor %}
+        </ul>
+    </nav>
+    <div class="landing-wrapper">
+       <div class="card">
+           <div class="card-body">
+               {{ form_start(blogForm) }}
+                   {{ form_row(blogForm.title) }}
+                   {{ form_row(blogForm.content) }}
+                   {{ form_row(blogForm.date) }}
+                   <button type="submit">Submit</button>
+               {{ form_end(blogForm) }}
+           </div>
+       </div>
+    </div>
+</div>
+{% endblock %}
