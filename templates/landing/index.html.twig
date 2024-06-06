@@ -19,14 +19,16 @@
     <div class="landing-wrapper">
        <div class="card">
            <div class="card-body">
-               {{ form_start(blogForm) }}
-                   {{ form_row(blogForm.title) }}
-                   {{ form_row(blogForm.content) }}
-                   {{ form_row(blogForm.date) }}
-                   <button type="submit">Submit</button>
-               {{ form_end(blogForm) }}
+               <div class="form">
+                   {{ form_start(blogForm) }}
+                       {{ form_row(blogForm.title) }}
+                       {{ form_row(blogForm.content) }}
+                       {{ form_row(blogForm.date) }}
+                       <button type="submit">Submit</button>
+                   {{ form_end(blogForm) }}
+               </div>
            </div>
-       </div>
+        </div>
     </div>
 </div>
 {% endblock %}
