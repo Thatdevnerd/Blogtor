@@ -30,9 +30,8 @@ class BlogPostFetchService
                 'POST',
                 'http://localhost:8000/blog/post/1',
             );
+            return json_decode($response->getContent(), true);
         } catch (\Exception $e) {
             throw($e);
-        }
-        return json_decode($response->getContent(), true);
-    }
+        }}
 }

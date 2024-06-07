@@ -29,27 +29,18 @@
            </div>
         </div>
         <div class="table">
-           {% if blog_posts.error %}
-               <div class="error">
-                   <div class="error-message">
-                       <span>{{ blog_posts.error }}</span>
-                   </div>
-               </div>
-           {% else %}
-               <table>
-                   <tr>
-                       <th>Title</th>
-                       <th>Content</th>
-                       <th>Date-posted</th>
-                   </tr>
-                   <tr>
-                       <td>{{ blog_posts.title }}</td>
-                       <td>{{ blog_posts.content }}</td>
-                       <td>{{ blog_posts.date }}</td>
-                   </tr>
-               </table>
-           {% endif%}
-
+            <table>
+                <tr>
+                    <th>Title</th>
+                    <th>Content</th>
+                    <th>Date-posted</th>
+                </tr>
+                <tr>
+                    <td>{{ blog_posts.title }}</td>
+                    <td>{{ blog_posts.content }}</td>
+                    <td>{{ blog_posts.date }}</td>
+                </tr>
+            </table>
         </div>
     </div>
 </div>

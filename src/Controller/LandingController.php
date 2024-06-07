@@ -56,10 +56,6 @@ class LandingController extends AbstractController
 
         $blogPost = $this->postFetchService->fetchBlogPost();
 
-        if (!is_object($blogPost)) {
-            $blogPost = ['error' => 'failed to get data from blogs'];
-        }
-
         return $this->render('landing/index.html.twig', [
             'blogForm' => $blogForm->createView(),
             'blog_posts' => $blogPost
