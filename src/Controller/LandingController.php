@@ -75,8 +75,18 @@ class LandingController extends AbstractController
             ]);
         } else {
             return new JsonResponse([
-               'message' => 'nothing found'
-           ]);
-       }
+                'message' => 'nothing found'
+            ]);
+        }
+    }
+
+    #[Route('/blog/posts')]
+    function getAllBlogPosts(Request $request, EntityManagerInterface $em)
+    {
+        $blogPosts = $em->getRepository(Blogs::class)->findAll();
+        $blogPostFiltered = array_filter($blogPosts, function($item) {
+           $item->setDate(new \DateTime(null));
+        });
+        return new JsonResponse($blogPosts);
     }
 }
