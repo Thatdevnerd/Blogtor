@@ -12,7 +12,7 @@ class BlogPostFetchService
 {
     private HttpClientInterface $http;
 
-    public function __constructor(HttpClientInterface $httpClient): void
+    public function __construct(HttpClientInterface $httpClient)
     {
         $this->http = $httpClient;
     }
@@ -22,12 +22,17 @@ class BlogPostFetchService
      * @throws ServerExceptionInterface
      * @throws RedirectionExceptionInterface
      * @throws ClientExceptionInterface
+     * @throws \Exception
      */
     public function fetchBlogPost(): array {
-        $response = $this->http->request(
-            'POST',
-            'http://localhost:8000/blog/post/1',
-        );
+        try {
+            $response = $this->http->request(
+                'POST',
+                'http://localhost:8000/blog/post/1',
+            );
+        } catch (\Exception $e) {
+            throw($e);
+        }
         return json_decode($response->getContent(), true);
     }
 }

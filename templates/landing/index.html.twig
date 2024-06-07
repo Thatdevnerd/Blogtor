@@ -11,9 +11,8 @@
 <div>
     <nav class="nav-wrapper">
         <ul>
-            {% for item in navItems %}
-                <li>{{ item.name }}</li>
-            {% endfor %}
+           <li>Home</li>
+           <li>Post</li>
         </ul>
     </nav>
     <div class="landing-wrapper">
@@ -37,18 +36,27 @@
            </div>
         </div>
         <div class="table">
-            <table>
-                <tr>
-                    <th>Title</th>
-                    <th>Content</th>
-                    <th>Date-posted</th>
-                </tr>
-                <tr>
-                    <td>{{ blog_posts.title }}</td>
-                    <td>{{ blog_posts.content }}</td>
-                    <td>{{ blog_posts.date }}/td>
-                </tr>
-            </table>
+           {% if blog_posts.error %}
+               <div>
+                   <div class="error-message">
+                       <span>{{ blog_posts.error }}</span>
+                   </div>
+               </div>
+           {% else %}
+               <table>
+                   <tr>
+                       <th>Title</th>
+                       <th>Content</th>
+                       <th>Date-posted</th>
+                   </tr>
+                   <tr>
+                       <td>{{ blog_posts.title }}</td>
+                       <td>{{ blog_posts.content }}</td>
+                       <td>{{ blog_posts.date }}/td>
+                   </tr>
+               </table>
+           {% endif%}
+
         </div>
     </div>
 </div>

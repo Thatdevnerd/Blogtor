@@ -21,8 +21,8 @@ class LandingController extends AbstractController
 {
     private BlogPostFetchService $postFetchService;
 
-    public function __construct(HttpClientInterface $client, BlogPostFetchService $postFetchService) {
-        $this->postFetchService = $postFetchService;
+    public function __construct(HttpClientInterface $httpClient) {
+        $this->postFetchService = new BlogPostFetchService($httpClient);
     }
 
     /**
@@ -54,11 +54,6 @@ class LandingController extends AbstractController
             ]], 200);
         }
 
-        $navItems = [
-            ['name' => 'Home', 'url' => '/', 'allowed' => 0],
-            ['name' => 'Post', 'url' => '/post', 'allowed' => 0]
-        ];
-
         $blogPost = $this->postFetchService->fetchBlogPost();
 
         if (!is_object($blogPost)) {
@@ -66,7 +61,6 @@ class LandingController extends AbstractController
         }
 
         return $this->render('landing/index.html.twig', [
-            'navItems' => $navItems,
             'blogForm' => $blogForm->createView(),
             'blog_posts' => $blogPost
         ]);
@@ -76,13 +70,7 @@ class LandingController extends AbstractController
     function getBlogPosts(Request $request, EntityManagerInterface $em): JsonResponse
     {
         $id = $request->get('id');
-        if (is_nan($id)) {
-            return new JsonResponse([
-                'error' => "ID isn't numeric"
-            ]);
-        }
-
-        $blogPost = $em->getRepository(Blogs::class)->find($request->get('id'));
+        $blogPost = $em->getRepository(Blogs::class)->find($id);
         if ($blogPost) {
             return new JsonResponse([
                 'title' => $blogPost->getTitle(),
