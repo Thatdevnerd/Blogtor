@@ -108,3 +108,18 @@ html {
 .landing-wrapper .table table tr td {
     color: red;
 }
+
+.landing-wrapper .table .error {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: red;
+    width: 55%;
+    height: 10vh;
+}
+
+.landing-wrapper .table .error .error-message {
+    font-weight: bolder;
+    font-size: 2.5rem;
+    color: white;
+}

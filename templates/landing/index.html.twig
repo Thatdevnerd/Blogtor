@@ -19,13 +19,6 @@
        <div class="card">
            <div class="card-body">
                <div class="form">
-
-                   {% block form_errors %}
-                       <div class="error">
-                           <span>error</span>
-                       </div>
-                   {% endblock %}
-
                    {{ form_start(blogForm) }}
                        {{ form_row(blogForm.title) }}
                        {{ form_row(blogForm.content) }}
@@ -37,7 +30,7 @@
         </div>
         <div class="table">
            {% if blog_posts.error %}
-               <div>
+               <div class="error">
                    <div class="error-message">
                        <span>{{ blog_posts.error }}</span>
                    </div>
@@ -52,7 +45,7 @@
                    <tr>
                        <td>{{ blog_posts.title }}</td>
                        <td>{{ blog_posts.content }}</td>
-                       <td>{{ blog_posts.date }}/td>
+                       <td>{{ blog_posts.date }}</td>
                    </tr>
                </table>
            {% endif%}
