@@ -22,16 +22,30 @@ class BlogPostFetchService
      * @throws ServerExceptionInterface
      * @throws RedirectionExceptionInterface
      * @throws ClientExceptionInterface
-     * @throws \Exception
      */
     public function fetchBlogPost(): array {
-        try {
-            $response = $this->http->request(
-                'POST',
-                'http://localhost:8000/blog/post/1',
-            );
-            return json_decode($response->getContent(), true);
-        } catch (\Exception $e) {
-            throw($e);
-        }}
+        $response = $this->http->request(
+            'POST',
+            'http://localhost:8000/blog/post/1', [
+                'verify_peer' => false
+            ]
+        );
+        return json_decode($response->getContent(), true);
+    }
+
+    /**
+     * @throws TransportExceptionInterface
+     * @throws ServerExceptionInterface
+     * @throws RedirectionExceptionInterface
+     * @throws ClientExceptionInterface
+     */
+    public function fetchBlogPosts(): array {
+        $response = $this->http->request(
+            'POST',
+            'http://localhost:8000/blog/posts', [
+                'verify_peer' => false
+            ]
+        );
+        return json_decode($response->getContent(), true);
+    }
 }

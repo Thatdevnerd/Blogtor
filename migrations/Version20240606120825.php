@@ -14,7 +14,7 @@ final class Version20240606120825 extends AbstractMigration
 {
     public function getDescription(): string
     {
-        return '';
+        return 'The table where all blogs are stored';
     }
 
     public function up(Schema $schema): void

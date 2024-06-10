@@ -6,6 +6,7 @@ use App\Entity\Blogs;
 use App\Form\BlogPostFormType;
 use App\Services\BlogPostFetchService;
 use Doctrine\ORM\EntityManagerInterface;
+use Exception;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -17,9 +18,11 @@ use Symfony\Contracts\HttpClient\Exception\ServerExceptionInterface;
 use Symfony\Contracts\HttpClient\Exception\TransportExceptionInterface;
 use Symfony\Contracts\HttpClient\HttpClientInterface;
 
-class LandingController extends AbstractController
+class BlogsController extends AbstractController
 {
+
     private BlogPostFetchService $postFetchService;
+    private array $blogPosts = [];
 
     public function __construct(HttpClientInterface $httpClient) {
         $this->postFetchService = new BlogPostFetchService($httpClient);
@@ -62,6 +65,33 @@ class LandingController extends AbstractController
         ]);
     }
 
+
+    /**
+     * @throws Exception|TransportExceptionInterface
+     */
+    #[Route('/blog/list', name: 'app_blogs')]
+    public function list(): Response
+    {
+        $this->blogPosts = $this->postFetchService->fetchBlogPosts();
+        return $this->render('blogs/index.html.twig');
+    }
+
+
+    /*
+     * API Endpoints
+     */
+
+    #[Route('/blog/posts')]
+    function getAllBlogPosts(Request $request, EntityManagerInterface $em): JsonResponse
+    {
+        $blogPosts = $em->getRepository(Blogs::class)->findAll();
+        $filteredBlogPosts = array_filter($blogPosts, function($item) {
+            $item->setDate(new \DateTime(null));
+            return $item;
+        });
+        return new JsonResponse($filteredBlogPosts);
+    }
+
     #[Route('/blog/post/{id}', name: 'app_blog_posts')]
     function getBlogPosts(Request $request, EntityManagerInterface $em): JsonResponse
     {
@@ -78,15 +108,5 @@ class LandingController extends AbstractController
                 'message' => 'nothing found'
             ]);
         }
-    }
-
-    #[Route('/blog/posts')]
-    function getAllBlogPosts(Request $request, EntityManagerInterface $em)
-    {
-        $blogPosts = $em->getRepository(Blogs::class)->findAll();
-        $blogPostFiltered = array_filter($blogPosts, function($item) {
-           $item->setDate(new \DateTime(null));
-        });
-        return new JsonResponse($blogPosts);
     }
 }

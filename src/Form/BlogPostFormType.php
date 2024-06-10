@@ -5,6 +5,7 @@ namespace App\Form;
 use App\Entity\Blogs;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\Length;
@@ -29,7 +30,7 @@ class BlogPostFormType extends AbstractType
                     'placeholder' => 'Blog post titel'
                 ]
             ])
-            ->add('content', null, [
+            ->add('content', TextareaType::class, [
                 'constraints' => [
                     new NotBlank([
                         'message' => 'Please enter a content',
@@ -40,7 +41,8 @@ class BlogPostFormType extends AbstractType
                     ]),
                 ],
                 'attr' => [
-                    'placeholder' => 'Uw blog post titel'
+                    'placeholder' => 'Uw blog post titel',
+                    'rows' => 30,
                 ]
             ])
             ->add('date', null, [
