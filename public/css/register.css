@@ -3,12 +3,22 @@
     margin: 0;
 }
 
+.wrapper {
+    display: flex;
+    flex-direction: row;
+    justify-content: left;
+    align-items: center
+}
+
 form {
     display: flex;
-    flex-direction: column;
-    justify-content: right;
     align-items: center;
     width: 35vw;
     height: 100vh;
     background-color: #36a9a9;
+}
+
+form div input {
+    display: flex;
+    flex-direction: column;
 }

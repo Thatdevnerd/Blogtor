@@ -76,7 +76,6 @@ class BlogsController extends AbstractController
         return $this->render('blogs/index.html.twig');
     }
 
-
     /*
      * API Endpoints
      */
