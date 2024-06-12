@@ -2,6 +2,8 @@
 
 namespace App\Command;
 
+use App\Entity\User;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
@@ -16,7 +18,7 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 )]
 class GenerateTestUserCommand extends Command
 {
-    public function __construct()
+    public function __construct(private EntityManagerInterface $em)
     {
         parent::__construct();
     }
@@ -36,6 +38,13 @@ class GenerateTestUserCommand extends Command
         $password = $input->getArgument('password');
 
         if (!$username && !$password) { return Command::FAILURE; }
+
+        $user = new User();
+        $user->setEmail($username);
+        $user->setPassword($password);
+
+        $this->em->persist($user);
+        $this->em->flush();
 
         //TODO Generate user
 
