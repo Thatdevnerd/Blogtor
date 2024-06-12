@@ -11,6 +11,7 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
+use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
 #[AsCommand(
     name: 'generate:test-user',
@@ -18,7 +19,10 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 )]
 class GenerateTestUserCommand extends Command
 {
-    public function __construct(private EntityManagerInterface $em)
+    public function __construct(
+        private EntityManagerInterface $em,
+        private UserPasswordHasherInterface $passwordHasher
+    )
     {
         parent::__construct();
     }
@@ -33,16 +37,19 @@ class GenerateTestUserCommand extends Command
 
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
+        $user = new User();
         $io = new SymfonyStyle($input, $output);
         $username = $input->getArgument('email');
-        $password = $input->getArgument('password');
+        $password = $this->passwordHasher->hashPassword(
+            $user,
+            $input->getArgument('password')
+        );
 
         if (!$username && !$password) {
             $io->error('Username and password are required');
             return Command::FAILURE;
         }
 
-        $user = new User();
         $user->setEmail($username);
         $user->setPassword($password);
         $user->setRoles(['ROLE_ADMIN']);
