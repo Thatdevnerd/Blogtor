@@ -37,16 +37,18 @@ class GenerateTestUserCommand extends Command
         $username = $input->getArgument('email');
         $password = $input->getArgument('password');
 
-        if (!$username && !$password) { return Command::FAILURE; }
+        if (!$username && !$password) {
+            $io->error('Username and password are required');
+            return Command::FAILURE;
+        }
 
         $user = new User();
         $user->setEmail($username);
         $user->setPassword($password);
+        $user->setRoles(['ROLE_ADMIN']);
 
         $this->em->persist($user);
         $this->em->flush();
-
-        //TODO Generate user
 
         $io->success('User generated successfully');
 
