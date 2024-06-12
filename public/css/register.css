@@ -3,6 +3,11 @@
     margin: 0;
 }
 
+button:hover {
+    transition: 1s ease-in;
+    background-color: #36a9a9;
+}
+
 .wrapper {
     display: flex;
     flex-direction: row;
@@ -10,13 +15,19 @@
     align-items: center;
     height: 100vh;
     width: 100vw;
-    background-color: saddlebrown;
+    background-image: url(../blog-bg.png);
+    background-repeat: no-repeat;
+    background-size: cover;
 }
 
 .wrapper .register-form {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
     height: 100vh;
     width: 30vw;
-    background-color: #36a9a9;
+    background-color: rgba(255, 0, 0, 0.9);
 }
 
 .wrapper .register-form div {
@@ -29,8 +40,16 @@
 
 .wrapper .register-form div input {
     border-radius: 10px;
-    width: 50%;
+    border: none;
+    width: 15vw;
     height: 2.2vh;
+    text-align: center;
+    margin-bottom: 1.2rem;
+}
+
+.wrapper .register-form div label {
+    color: white;
+    margin-bottom: 0.7rem;
 }
 
 .wrapper .register-form div input::placeholder {
