@@ -7,18 +7,48 @@
     display: flex;
     flex-direction: row;
     justify-content: left;
-    align-items: center
+    align-items: center;
+    height: 100vh;
+    width: 100vw;
+    background-color: saddlebrown;
 }
 
-form {
-    display: flex;
-    align-items: center;
-    width: 35vw;
+.wrapper .register-form {
     height: 100vh;
+    width: 30vw;
     background-color: #36a9a9;
 }
 
-form div input {
+.wrapper .register-form div {
     display: flex;
     flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 1rem;
+}
+
+.wrapper .register-form div input {
+    border-radius: 10px;
+    width: 50%;
+    height: 2.2vh;
+}
+
+.wrapper .register-form div input::placeholder {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.wrapper .register-form .submit-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 1rem;
+}
+
+.wrapper .register-form .submit-wrapper button {
+    width: 15vw;
+    height: 3vh;
+    border-radius: 10px;
+    border: none;
 }
