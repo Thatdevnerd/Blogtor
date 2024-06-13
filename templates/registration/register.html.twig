@@ -8,16 +8,25 @@
 
 {% block body %}
     <div class="wrapper">
-        {{ form_errors(registrationForm) }}
+       <div class="form-errors">
+           {{ form_errors(registrationForm, {'attr': {
+               'class': 'error-message'
+           }}) }}
+
+           {% if error|default(null) %}
+               <span style="color: white;">
+                   {{ email_error }}
+               </span>
+           {% endif %}
+       </div>
 
         {{ form_start(registrationForm, { 'attr': {'class': 'register-form'} }) }}
-        {{ form_row(registrationForm.email, {'attr': {'class': 'register-input'}}) }}
-        {{ form_row(registrationForm.plainPassword, {'attr': {'class': 'register-input'}}) }}
-        {{ form_row(registrationForm.agreeTerms) }}
+            {{ form_row(registrationForm.email, {'attr': {'class': 'register-input'}}) }}
+            {{ form_row(registrationForm.plainPassword, {'attr': {'class': 'register-input'}}) }}
 
-        <div class="submit-wrapper">
-            <button type="submit" class="btn">Register</button>
-        </div>
+            <div class="submit-wrapper">
+                <button type="submit" class="btn">Register</button>
+            </div>
         {{ form_end(registrationForm) }}
     </div>
 {% endblock %}

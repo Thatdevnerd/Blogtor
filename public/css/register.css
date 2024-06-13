@@ -4,8 +4,9 @@
 }
 
 button:hover {
-    transition: 1s ease-in;
-    background-color: #36a9a9;
+    transition: 0.3s ease-in;
+    color: white;
+    background-color: #9b2d01;
 }
 
 .wrapper {
@@ -15,9 +16,17 @@ button:hover {
     align-items: center;
     height: 100vh;
     width: 100vw;
-    background-image: url(../blog-bg.png);
+    background-image: url(../media/blog-bg.png);
     background-repeat: no-repeat;
     background-size: cover;
+}
+
+.form-errors ul {
+    background: darkred;
+}
+
+.form-errors ul li {
+    color: white;
 }
 
 .wrapper .register-form {
@@ -27,7 +36,7 @@ button:hover {
     align-items: center;
     height: 100vh;
     width: 30vw;
-    background-color: rgba(255, 0, 0, 0.9);
+    background-color: rgba(255, 0, 0, 0.8);
 }
 
 .wrapper .register-form div {
