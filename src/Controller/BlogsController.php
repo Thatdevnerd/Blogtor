@@ -40,24 +40,13 @@ class BlogsController extends AbstractController
     public function index(Request $request, EntityManagerInterface $em, UserInterface $user, LoggerInterface $logger): Response
     {
         if ($user instanceof User) {
-            return $this->render('blog/index.html.twig', [
-                'user' => $user->getEmail()
+            return $this->render('blog_overview/index.html.twig', [
+                'user_email' => $user->getEmail(),
             ]);
         }
         return new JsonResponse([
             'error' => 'Unauthorized access'
         ]);
-    }
-
-
-    /**
-     * @throws Exception|TransportExceptionInterface
-     */
-    #[Route('/blog/list', name: 'app_blogs')]
-    public function list(): Response
-    {
-        $this->blogPosts = $this->postFetchService->fetchBlogPosts();
-        return $this->render('blog/index.html.twig');
     }
 
     /*
