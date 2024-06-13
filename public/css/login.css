@@ -9,12 +9,17 @@ button:hover {
     background-color: #9b2d01;
 }
 
-.wrapper {
-    height: 100vh;
-    width: 100vw;
+.container {
+    display: flex;
+    flex-direction: row;
     background-image: url(../media/blog-bg.png);
     background-repeat: no-repeat;
     background-size: cover;
+}
+
+.wrapper {
+    height: 100vh;
+    width: 100vw;
 }
 
 .wrapper .login-btn button {
@@ -67,18 +72,20 @@ button:hover {
 }
 
 .session-wrapper {
+    position: absolute;
     display: flex;
-    justify-content: center;
     align-items: center;
-}
-
-.active-session {
-    display: flex;
     justify-content: center;
-    align-items: center;
+    top: 50%;
+    left: 40%;
+    transform: translate(-50%, -80%);
+    background-color: rgba(255, 87, 51, 0.8);
+    width: 30vw;
+    height: 15vh;
 }
 
 .active-session span {
-    color: black;
-    z-index: 99;
+    color: white;
+    font-size: 1.5rem;
+    font-weight: bold;
 }
