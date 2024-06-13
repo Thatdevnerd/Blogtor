@@ -3,15 +3,18 @@
 namespace App\Controller;
 
 use App\Entity\Blogs;
+use App\Entity\User;
 use App\Form\BlogPostFormType;
 use App\Services\BlogPostFetchService;
 use Doctrine\ORM\EntityManagerInterface;
 use Exception;
+use Psr\Log\LoggerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Contracts\HttpClient\Exception\ClientExceptionInterface;
 use Symfony\Contracts\HttpClient\Exception\RedirectionExceptionInterface;
 use Symfony\Contracts\HttpClient\Exception\ServerExceptionInterface;
@@ -29,39 +32,20 @@ class BlogsController extends AbstractController
     }
 
     /**
-     * @throws TransportExceptionInterface
      * @throws ServerExceptionInterface
      * @throws RedirectionExceptionInterface
      * @throws ClientExceptionInterface
      */
-    #[Route('/blog/post', name: 'app_landing')]
-    public function index(Request $request, EntityManagerInterface $em): Response
+    #[Route('/blog/posts', name: 'app_blog_posts')]
+    public function index(Request $request, EntityManagerInterface $em, UserInterface $user, LoggerInterface $logger): Response
     {
-        $blogForm = $this->createForm(BlogPostFormType::class);
-        $blogForm->handleRequest($request);
-
-        if ($blogForm->isSubmitted() && $blogForm->isValid()) {
-            $blogEntity = new Blogs();
-
-            $blogEntity->setTitle($blogForm->get('title')->getData());
-            $blogEntity->setContent($blogForm->get('content')->getData());
-            $blogEntity->setDate($blogForm->get('date')->getData());
-
-            $em->persist($blogEntity);
-            $em->flush();
-
-            return new JsonResponse(['message' => 'Blog post created!', 'data' => [
-                'title' => $blogEntity->getTitle(),
-                'content' => $blogEntity->getContent(),
-                'date' => $blogEntity->getDate()
-            ]], 200);
+        if ($user instanceof User) {
+            return $this->render('blog/index.html.twig', [
+                'user' => $user->getEmail()
+            ]);
         }
-
-        $blogPost = $this->postFetchService->fetchBlogPost();
-
-        return $this->render('landing/index.html.twig', [
-            'blogForm' => $blogForm->createView(),
-            'blog_posts' => $blogPost
+        return new JsonResponse([
+            'error' => 'Unauthorized access'
         ]);
     }
 
@@ -73,7 +57,7 @@ class BlogsController extends AbstractController
     public function list(): Response
     {
         $this->blogPosts = $this->postFetchService->fetchBlogPosts();
-        return $this->render('blogs/index.html.twig');
+        return $this->render('blog/index.html.twig');
     }
 
     /*
@@ -91,7 +75,7 @@ class BlogsController extends AbstractController
         return new JsonResponse($filteredBlogPosts);
     }
 
-    #[Route('/blog/post/{id}', name: 'app_blog_posts')]
+    #[Route('/blog/post/{id}')]
     function getBlogPosts(Request $request, EntityManagerInterface $em): JsonResponse
     {
         $id = $request->get('id');

@@ -14,18 +14,18 @@ final class Version20240606120825 extends AbstractMigration
 {
     public function getDescription(): string
     {
-        return 'The table where all blogs are stored';
+        return 'The table where all blog are stored';
     }
 
     public function up(Schema $schema): void
     {
         // this up() migration is auto-generated, please modify it to your needs
-        $this->addSql('CREATE TABLE blogs (id INT AUTO_INCREMENT NOT NULL, title VARCHAR(75) NOT NULL, content VARCHAR(300) NOT NULL, date DATETIME NOT NULL, PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
+        $this->addSql('CREATE TABLE blog (id INT AUTO_INCREMENT NOT NULL, title VARCHAR(75) NOT NULL, content VARCHAR(300) NOT NULL, date DATETIME NOT NULL, PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
     }
 
     public function down(Schema $schema): void
     {
         // this down() migration is auto-generated, please modify it to your needs
-        $this->addSql('DROP TABLE blogs');
+        $this->addSql('DROP TABLE blog');
     }
 }

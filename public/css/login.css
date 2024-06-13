@@ -80,7 +80,7 @@ button:hover {
     top: 50%;
     left: 40%;
     transform: translate(-50%, -80%);
-    background-color: rgba(255, 87, 51, 0.8);
+    background-color: rgba(34, 125, 203, 0.8);
     width: 30vw;
     height: 15vh;
 }
