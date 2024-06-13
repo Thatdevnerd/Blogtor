@@ -3,11 +3,13 @@
     margin: 0;
 }
 
+button:hover {
+    transition: 0.3s ease-in;
+    color: white;
+    background-color: #9b2d01;
+}
+
 .wrapper {
-    display: flex;
-    flex-direction: row;
-    justify-content: right;
-    align-items: center;
     height: 100vh;
     width: 100vw;
     background-image: url(../media/blog-bg.png);
@@ -21,17 +23,25 @@
     border-radius: 10px;
     border: none;
     cursor: pointer;
-    background-color: #fff;;
 }
 
 .wrapper .login-form {
     display: flex;
-    flex-direction: column;
+    justify-content: right;
+}
+
+.wrapper .login-form .input-wrapper {
+    display: flex;
     justify-content: center;
     align-items: center;
+    flex-direction: column;
+    height: 100vh;
+}
+
+.wrapper .login-form form {
     height: 100vh;
     width: 30vw;
-    background-color: rgba(255, 0, 0, 0.9);
+    background-color: rgba(255, 0, 0, 0.8);
 }
 
 .wrapper .login-form .form-input {
@@ -54,4 +64,21 @@
 .wrapper .login-form .form-input label {
     color: white;
     margin-bottom: 0.7rem;
+}
+
+.session-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.active-session {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.active-session span {
+    color: black;
+    z-index: 99;
 }
