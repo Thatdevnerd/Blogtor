@@ -7,7 +7,6 @@ use App\Entity\User;
 use App\Form\BlogPostFormType;
 use App\Services\BlogPostFetchService;
 use Doctrine\ORM\EntityManagerInterface;
-use Exception;
 use Psr\Log\LoggerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -37,35 +36,23 @@ class BlogsController extends AbstractController
      * @throws ClientExceptionInterface
      */
     #[Route('/blog/posts', name: 'app_blog_posts')]
-    public function index(Request $request, EntityManagerInterface $em, UserInterface $user, LoggerInterface $logger): Response
+    public function index(Request $request, EntityManagerInterface $em,
+                          UserInterface $user,
+                          LoggerInterface $logger): Response
     {
         if ($user instanceof User) {
             return $this->render('blog_overview/index.html.twig', [
                 'user_email' => $user->getEmail(),
             ]);
         }
-        return new JsonResponse([
+        return $this->json([
             'error' => 'Unauthorized access'
         ]);
     }
 
-    /*
-     * API Endpoints
-     */
-
-    #[Route('/blog/posts')]
-    function getAllBlogPosts(Request $request, EntityManagerInterface $em): JsonResponse
-    {
-        $blogPosts = $em->getRepository(Blogs::class)->findAll();
-        $filteredBlogPosts = array_filter($blogPosts, function($item) {
-            $item->setDate(new \DateTime(null));
-            return $item;
-        });
-        return new JsonResponse($filteredBlogPosts);
-    }
 
     #[Route('/blog/post/{id}')]
-    function getBlogPosts(Request $request, EntityManagerInterface $em): JsonResponse
+    function post(Request $request, EntityManagerInterface $em): JsonResponse
     {
         $id = $request->get('id');
         $blogPost = $em->getRepository(Blogs::class)->find($id);
@@ -76,7 +63,7 @@ class BlogsController extends AbstractController
                 'date' => $blogPost->getDate()->getTimestamp()
             ]);
         } else {
-            return new JsonResponse([
+            return $this->json([
                 'message' => 'nothing found'
             ]);
         }

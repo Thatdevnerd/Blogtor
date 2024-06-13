@@ -13,8 +13,8 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
 #[AsCommand(
-    name: 'generate:test-user',
-    description: 'Generate a test user for the application',
+    name: 'generate:test-admin',
+    description: 'Generate a test admin account for the application',
 )]
 class GenerateTestUserCommand extends Command
 {
@@ -56,7 +56,7 @@ class GenerateTestUserCommand extends Command
         $this->em->persist($user);
         $this->em->flush();
 
-        $io->success('User generated successfully');
+        $io->success('Admin account generated successfully');
 
         return Command::SUCCESS;
     }
