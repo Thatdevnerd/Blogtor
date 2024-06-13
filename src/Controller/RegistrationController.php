@@ -7,6 +7,7 @@ use App\Form\RegistrationFormType;
 use Doctrine\ORM\EntityManagerInterface;
 use Psr\Log\LoggerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
@@ -43,11 +44,16 @@ class RegistrationController extends AbstractController
 
                 return $this->redirectToRoute('app_login');
             }
+
+            //TODO Get the email_error to display
+            return $this->render('registration/register.html.twig', [
+                'registrationForm' => $form,
+                'email_error' => $this->emailIsValid ? null : 'Invalid email address'
+            ]);
         }
 
         return $this->render('registration/register.html.twig', [
-            'registrationForm' => $form,
-            'email_error' => $this->emailIsValid ? null : 'Invalid email address'
+            'registrationForm' => $form
         ]);
     }
 
@@ -60,6 +66,8 @@ class RegistrationController extends AbstractController
         if (!preg_match($pattern, $email)) {
             return false;
         }
+
+        //Possibly needs more checking(?)
 
         return true;
     }
