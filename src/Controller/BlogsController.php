@@ -4,10 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Blogs;
 use App\Entity\User;
-use App\Form\BlogPostFormType;
-use App\Services\BlogPostFetchService;
 use Doctrine\ORM\EntityManagerInterface;
-use Psr\Log\LoggerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -17,28 +14,16 @@ use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Contracts\HttpClient\Exception\ClientExceptionInterface;
 use Symfony\Contracts\HttpClient\Exception\RedirectionExceptionInterface;
 use Symfony\Contracts\HttpClient\Exception\ServerExceptionInterface;
-use Symfony\Contracts\HttpClient\Exception\TransportExceptionInterface;
 use Symfony\Contracts\HttpClient\HttpClientInterface;
 
 class BlogsController extends AbstractController
 {
+    public function __construct(HttpClientInterface $httpClient) {}
 
-    private BlogPostFetchService $postFetchService;
-    private array $blogPosts = [];
-
-    public function __construct(HttpClientInterface $httpClient) {
-        $this->postFetchService = new BlogPostFetchService($httpClient);
-    }
-
-    /**
-     * @throws ServerExceptionInterface
-     * @throws RedirectionExceptionInterface
-     * @throws ClientExceptionInterface
-     */
     #[Route('/blog/posts', name: 'app_blog_posts')]
-    public function index(Request $request, EntityManagerInterface $em,
-                          UserInterface $user,
-                          LoggerInterface $logger): Response
+    public function index(Request $request,
+                          EntityManagerInterface $em,
+                          UserInterface $user): Response
     {
         if ($user instanceof User) {
             return $this->render('blog_overview/index.html.twig', [
@@ -51,7 +36,7 @@ class BlogsController extends AbstractController
     }
 
 
-    #[Route('/blog/post/{id}')]
+    #[Route('/blog/post/{id}', name: 'app_blog_post', methods: ['GET'])]
     function post(Request $request, EntityManagerInterface $em): JsonResponse
     {
         $id = $request->get('id');
