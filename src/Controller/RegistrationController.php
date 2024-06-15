@@ -17,7 +17,7 @@ class RegistrationController extends AbstractController
 
     private bool $emailIsValid = false;
 
-    #[Route('/register', name: 'app_register')]
+    #[Route('/register', name: 'app_register', methods: ['GET'])]
     public function register(Request $request,
                              UserPasswordHasherInterface $userPasswordHasher,
                              EntityManagerInterface $entityManager,
@@ -56,6 +56,7 @@ class RegistrationController extends AbstractController
         ]);
     }
 
+    //TODO Replace this with symfony built in email validation
     private function validateEmail(String $email): bool {
         if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
             return false;

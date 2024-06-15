@@ -8,7 +8,9 @@
             <div class="login-form">
                 <form method="post">
                     {% if error %}
-                        <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+                        <div class="error-wrapper">
+                            <div class="form-errors">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+                        </div>
                     {% endif %}
 
                     <div class="input-wrapper">
