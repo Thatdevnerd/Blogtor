@@ -1,9 +1,13 @@
-<title>{% block title %}{% endblock %}</title>
-
-{% block stylesheets %}{% endblock %}
-
-<body>
+<html lang="en-US">
+    <head>
+        <title>{% block title %}{% endblock %}</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        {% block stylesheets %}{% endblock %}
+    </head>
+    <body>
     {% block body %}
         <div>Body content here</div>
     {% endblock %}
-</body>
+    </body>
+</html>
