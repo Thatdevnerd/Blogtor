@@ -23,29 +23,13 @@ class BlogPostFetchService
      * @throws RedirectionExceptionInterface
      * @throws ClientExceptionInterface
      */
-    public function fetchBlogPost(): array {
-        $response = $this->http->request(
-            'POST',
-            'http://localhost:8000/blog/post/1', [
-                'verify_peer' => false
-            ]
-        );
-        return json_decode($response->getContent(), true);
-    }
-
-    /**
-     * @throws TransportExceptionInterface
-     * @throws ServerExceptionInterface
-     * @throws RedirectionExceptionInterface
-     * @throws ClientExceptionInterface
-     */
-    public function fetchBlogPosts(): array {
-        $response = $this->http->request(
-            'POST',
-            'http://localhost:8000/blog/posts', [
-                'verify_peer' => false
-            ]
-        );
+    public function fetchPost($all = false, $id = null): array {
+        if (!$all) {
+            if (is_null($id)) { return ['error' => 'id is null']; }
+            $response = $this->http->request('GET', 'http://localhost/blog/posts/' . $id);
+        } else {
+            $response = $this->http->request('GET', 'http://localhost/blog/posts');
+        }
         return json_decode($response->getContent(), true);
     }
 }

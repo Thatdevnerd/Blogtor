@@ -30,6 +30,7 @@ class GenerateTestUserCommand extends Command
     {
         $this
             ->addArgument('email', InputArgument::REQUIRED, 'Email (username) for the user')
+                ->addOption("rank", null, InputArgument::OPTIONAL, "Rank of the user", "admin")
             ->addArgument('password', InputArgument::REQUIRED, 'Password for the test user')
         ;
     }
@@ -43,9 +44,22 @@ class GenerateTestUserCommand extends Command
             $user,
             $input->getArgument('password')
         );
+        $rank = $input->getOption("rank");
+
+        $roles = [
+            'ROLE_ADMIN',
+            'ROLE_USER'
+        ];
 
         if (!$username && !$password) {
             $io->error('Username and password are required');
+            return Command::FAILURE;
+        }
+
+        if (in_array($rank, $roles)) {
+            $user->setRoles([$rank]);
+        } else {
+            $io->error('Invalid rank');
             return Command::FAILURE;
         }
 
@@ -57,7 +71,6 @@ class GenerateTestUserCommand extends Command
         $this->em->flush();
 
         $io->success('Admin account generated successfully');
-
         return Command::SUCCESS;
     }
 }

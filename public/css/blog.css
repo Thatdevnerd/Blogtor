@@ -39,7 +39,7 @@ li div {
     background: linear-gradient(90deg, rgba(0, 0, 0, 0.8) 0%, rgba(0, 0, 0, 0.5) 100%);
 }
 
-.container .nav-wrapper .horizontal-nav {
+.horizontal-nav {
     display: flex;
     flex-direction: row;
     justify-content: center;

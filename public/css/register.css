@@ -29,7 +29,7 @@ button:hover {
     color: white;
 }
 
-.wrapper .register-form {
+.register-form {
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -39,7 +39,7 @@ button:hover {
     background-color: rgba(255, 0, 0, 0.8);
 }
 
-.wrapper .register-form div {
+.register-form div {
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -47,7 +47,7 @@ button:hover {
     margin-bottom: 1rem;
 }
 
-.wrapper .register-form div input {
+.register-form div input {
     border-radius: 10px;
     border: none;
     width: 15vw;
@@ -56,25 +56,25 @@ button:hover {
     margin-bottom: 1.2rem;
 }
 
-.wrapper .register-form div label {
+.register-form div label {
     color: white;
     margin-bottom: 0.7rem;
 }
 
-.wrapper .register-form div input::placeholder {
+.register-form div input::placeholder {
     display: flex;
     justify-content: center;
     align-items: center;
 }
 
-.wrapper .register-form .submit-wrapper {
+.submit-wrapper {
     display: flex;
     justify-content: center;
     align-items: center;
     margin-top: 1rem;
 }
 
-.wrapper .register-form .submit-wrapper button {
+.submit-wrapper button {
     width: 15vw;
     height: 3vh;
     border-radius: 10px;
