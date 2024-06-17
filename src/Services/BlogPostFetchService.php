@@ -18,12 +18,15 @@ class BlogPostFetchService
     }
 
     /**
-     * @throws TransportExceptionInterface
-     * @throws ServerExceptionInterface
-     * @throws RedirectionExceptionInterface
+     * @param bool $all
+     * @param int|null $id
+     * @return array
      * @throws ClientExceptionInterface
+     * @throws RedirectionExceptionInterface
+     * @throws ServerExceptionInterface
+     * @throws TransportExceptionInterface
      */
-    public function fetchPost($all = false, $id = null): array {
+    public function fetchPost(bool $all = false, int $id = null): array {
         if (!$all) {
             if (is_null($id)) { return ['error' => 'id is null']; }
             $response = $this->http->request('GET', 'http://localhost/blog/posts/' . $id);

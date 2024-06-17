@@ -44,7 +44,7 @@ class GenerateTestUserCommand extends Command
             $user,
             $input->getArgument('password')
         );
-        $rank = $input->getOption("rank");
+        $role = $input->getOption("rank");
 
         $roles = [
             'ROLE_ADMIN',
@@ -56,8 +56,8 @@ class GenerateTestUserCommand extends Command
             return Command::FAILURE;
         }
 
-        if (in_array($rank, $roles)) {
-            $user->setRoles([$rank]);
+        if (in_array($role, $roles)) {
+            $user->setRoles([$role]);
         } else {
             $io->error('Invalid rank');
             return Command::FAILURE;
