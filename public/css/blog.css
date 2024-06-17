@@ -15,7 +15,7 @@ li {
     list-style: none;
 }
 
-li div {
+li div{
     margin-top: 5rem;
     margin-bottom: 5rem;
     display: flex;
@@ -59,4 +59,8 @@ div span {
     align-items: center;
     list-style: none;
     gap: 2.5rem;
+}
+
+.blog-title {
+    font-size: 3rem;
 }

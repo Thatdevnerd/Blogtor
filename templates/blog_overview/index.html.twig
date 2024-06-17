@@ -1,6 +1,6 @@
-<!DOCTYPE html>
+{% extends 'base.html.twig' %}
 
-<title>Blog overview</title>
+{% block title %}Blog overview{% endblock %}
 
 {% block stylesheets %}
     <link rel="stylesheet" href="{{ asset('css/blog.css') }}">
@@ -26,37 +26,43 @@
     <div class="blog-list-wrapper">
         <div class="blog-list">
             <ul>
+                <li class="blog-card-wrapper">
+                  <div class="blog-card">
+                      <div class="blog-title">
+                          <span>test</span>
+                      </div>
+                      <div class="blog-body">
+                          <span>test</span>
+                      </div>
+                      <div class="blog-footer">
+                          test
+                      </div>
+                  </div>
+                </li>
                 <li>
-                    <div class="blog-title">
-                        <span>test</span>
-                    </div>
-                    <div class="blog-body">
-
-                    </div>
-                    <div class="blog-footer">
-
+                    <div class="blog-card">
+                        <div class="blog-title">
+                            <span>test</span>
+                        </div>
+                        <div class="blog-body">
+                            <span>test</span>
+                        </div>
+                        <div class="blog-footer">
+                            test
+                        </div>
                     </div>
                 </li>
                 <li>
-                    <div class="blog-title">
-                        <span>test</span>
-                    </div>
-                    <div class="blog-body">
-
-                    </div>
-                    <div class="blog-footer">
-
-                    </div>
-                </li>
-                <li>
-                    <div class="blog-title">
-                        <span>test</span>
-                    </div>
-                    <div class="blog-body">
-
-                    </div>
-                    <div class="blog-footer">
-
+                    <div class="blog-card">
+                        <div class="blog-title">
+                            <span>test</span>
+                        </div>
+                        <div class="blog-body">
+                            <span>test</span>
+                        </div>
+                        <div class="blog-footer">
+                            test
+                        </div>
                     </div>
                 </li>
             </ul>
