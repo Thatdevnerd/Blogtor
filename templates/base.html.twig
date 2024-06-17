@@ -1,5 +1,9 @@
-{% block title %}<title>Welcome to base</title>{% endblock %}
+<title>{% block title %}{% endblock %}</title>
 
 {% block stylesheets %}{% endblock %}
 
-{% block body %}{% endblock %}
+<body>
+    {% block body %}
+        <div>Body content here</div>
+    {% endblock %}
+</body>
