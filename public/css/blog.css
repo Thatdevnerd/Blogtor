@@ -17,7 +17,7 @@ li {
 
 li div{
     margin-top: 5rem;
-    margin-bottom: 5rem;
+    margin-bottom: 1.5rem;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -62,5 +62,9 @@ div span {
 }
 
 .blog-title {
-    font-size: 3rem;
+    background-color: #5b5b5b;
+    bottom: 5rem;
+    height: 100%;
+    width: 100%;
+    border-bottom: 2px solid black;
 }

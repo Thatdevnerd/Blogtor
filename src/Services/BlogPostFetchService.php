@@ -21,6 +21,7 @@ class BlogPostFetchService
      * @param bool $all
      * @param int|null $id
      * @return array
+     *
      * @throws ClientExceptionInterface
      * @throws RedirectionExceptionInterface
      * @throws ServerExceptionInterface

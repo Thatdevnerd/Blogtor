@@ -35,7 +35,7 @@ class BlogsController extends AbstractController
                           UserInterface $user): Response
     {
         if ($user instanceof User) {
-//            $response = $postFetchService->fetchPost();
+            $response = $postFetchService->fetchPost();
 
             return $this->render('blog_overview/index.html.twig', [
                 'user_email' => $user->getEmail(),

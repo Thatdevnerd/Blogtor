@@ -14,7 +14,6 @@ use Symfony\Component\Routing\Attribute\Route;
 
 class RegistrationController extends AbstractController
 {
-
     private bool $emailIsValid = false;
 
     #[Route('/register', name: 'app_register', methods: ['GET'])]
@@ -40,7 +39,6 @@ class RegistrationController extends AbstractController
 
                 $entityManager->persist($user);
                 $entityManager->flush();
-
                 return $this->redirectToRoute('app_login');
             }
 
