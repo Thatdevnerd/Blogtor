@@ -5,7 +5,6 @@ namespace App\Controller;
 use App\Entity\User;
 use App\Form\RegistrationFormType;
 use Doctrine\ORM\EntityManagerInterface;
-use Psr\Log\LoggerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -19,8 +18,7 @@ class RegistrationController extends AbstractController
     #[Route('/register', name: 'app_register', methods: ['GET'])]
     public function register(Request $request,
                              UserPasswordHasherInterface $userPasswordHasher,
-                             EntityManagerInterface $entityManager,
-                             LoggerInterface $logger): Response
+                             EntityManagerInterface $entityManager): Response
     {
         $user = new User();
 
@@ -28,7 +26,7 @@ class RegistrationController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $this->emailIsValid = $this->validateEmail($form->get('email')->getData());
+            $this->emailIsValid = $this->validateEmail($form->get('emil')->getData());
             if ($this->emailIsValid) {
                 $user->setPassword(
                     $userPasswordHasher->hashPassword(
@@ -64,8 +62,6 @@ class RegistrationController extends AbstractController
         if (!preg_match($pattern, $email)) {
             return false;
         }
-
-        //Possibly needs more checking(?)
 
         return true;
     }
