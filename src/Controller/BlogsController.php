@@ -35,15 +35,12 @@ class BlogsController extends AbstractController
                           UserInterface $user): Response
     {
         if ($user instanceof User) {
-            $response = $postFetchService->fetchPost();
+            $response = $postFetchService->fetchPost(true );
+
+            var_dump($response);
 
             return $this->render('blog_overview/index.html.twig', [
                 'user_email' => $user->getEmail(),
-//                'blog' => [
-//                    'title' => $response['title'],
-//                    'content' => $response['content'],
-//                    'date' => $response['date'],
-//                ]
             ]);
         }
         return $this->json([
@@ -52,7 +49,7 @@ class BlogsController extends AbstractController
     }
 
 
-    #[Route('/blog/post/{id}', name: 'app_blog_post', methods: ['GET'])]
+    #[Route('/blog/posts/{id}', name: 'app_blog_post', methods: ['GET'])]
     function post(Request $request, EntityManagerInterface $em): JsonResponse
     {
         $id = $request->get('id');
@@ -68,5 +65,20 @@ class BlogsController extends AbstractController
                 'message' => 'nothing found'
             ]);
         }
+    }
+
+    #[Route('/blog/posts/all', name: 'app_blog_post_all', methods: ['GET'])]
+    function posts(Request $request, EntityManagerInterface $em): JsonResponse
+    {
+        $blogPosts = $em->getRepository(Blogs::class)->findAll();
+        $posts = [];
+        foreach ($blogPosts as $blogPost) {
+            $posts[] = [
+                'title' => $blogPost->getTitle(),
+                'content' => $blogPost->getContent(),
+                'date' => $blogPost->getDate()->getTimestamp()
+            ];
+        }
+        return $this->json($posts);
     }
 }

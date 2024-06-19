@@ -2,12 +2,10 @@
 
 namespace App\EventListener;
 
-use http\Env\Response;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\EventDispatcher\Attribute\AsEventListener;
-use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Event\ExceptionEvent;
-use Symfony\Component\HttpKernel\Event\RequestEvent;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\HttpKernel\KernelEvents;
 use Twig\Environment;
@@ -29,6 +27,8 @@ final readonly class NotFoundListener
     }
 
     /**
+     * @param ExceptionEvent $event
+     *
      * @throws RuntimeError
      * @throws SyntaxError
      * @throws LoaderError
@@ -43,8 +43,7 @@ final readonly class NotFoundListener
                 $exception->getMessage(),
                 $exception->getCode()
             );
-
-            $event->setResponse(new \Symfony\Component\HttpFoundation\Response(
+            $event->setResponse(new Response(
                 $this->twig->render('errors/404.html.twig', [
                     'message' => $message,
                 ]), 404)

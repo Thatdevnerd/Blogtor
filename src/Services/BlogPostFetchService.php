@@ -30,9 +30,13 @@ class BlogPostFetchService
     public function fetchPost(bool $all = false, int $id = null): array {
         if (!$all) {
             if (is_null($id)) { return ['error' => 'id is null']; }
-            $response = $this->http->request('GET', 'http://localhost/blog/posts/' . $id);
+            $response = $this->http->request('GET', 'http://localhost:8000/blog/posts/' . $id, [
+                'verify_peer' => false
+            ]);
         } else {
-            $response = $this->http->request('GET', 'http://localhost/blog/posts');
+            $response = $this->http->request('GET', 'http://localhost:8000/blog/posts/all', [
+                'verify_peer' => false
+            ]);
         }
         return json_decode($response->getContent(), true);
     }

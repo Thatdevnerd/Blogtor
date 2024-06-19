@@ -62,8 +62,10 @@ div span {
 }
 
 .blog-title {
+    left: 0;
+    top: 0;
     background-color: #5b5b5b;
-    bottom: 5rem;
+    margin-bottom: 1rem;
     height: 100%;
     width: 100%;
     border-bottom: 2px solid black;
