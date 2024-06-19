@@ -45,14 +45,14 @@ class BlogPostFormType extends AbstractType
                     'rows' => 30,
                 ]
             ])
-            ->add('date', null, [
-                'widget' => 'single_text',
-                'constraints' => [
-                    new NotBlank([
-                        'message' => 'Please enter a date',
-                    ]),
-                ],
-            ])
+//            ->add('date', null, [
+//                'widget' => 'single_text',
+//                'constraints' => [
+//                    new NotBlank([
+//                        'message' => 'Please enter a date',
+//                    ]),
+//                ],
+//            ])
             ->add('submit', SubmitType::class)
         ;
     }

@@ -17,12 +17,15 @@ use Symfony\Contracts\HttpClient\Exception\RedirectionExceptionInterface;
 use Symfony\Contracts\HttpClient\Exception\ServerExceptionInterface;
 use Symfony\Contracts\HttpClient\Exception\TransportExceptionInterface;
 use Symfony\Contracts\HttpClient\HttpClientInterface;
+use Symfony\Polyfill\Intl\Icu\Exception\NotImplementedException;
 
 class BlogsController extends AbstractController
 {
     private BlogPostFetchService $blogPostFetchService;
 
-    public function __construct(HttpClientInterface $httpClient, BlogPostFetchService $blogPostFetchService) {
+    public function __construct(HttpClientInterface $httpClient,
+                                BlogPostFetchService $blogPostFetchService)
+    {
         $this->blogPostFetchService = $blogPostFetchService;
     }
 
@@ -45,6 +48,10 @@ class BlogsController extends AbstractController
         ]);
     }
 
+    #[Route('/blog/create', name: 'app_blog_create', methods: ['GET'])]
+    public function blogCreate() {
+        throw new NotImplementedException('This method is not implemented');
+    }
 
     #[Route('/blog/post/{id}', name: 'app_blog_post', methods: ['GET'])]
     function post(Request $request, EntityManagerInterface $em): JsonResponse

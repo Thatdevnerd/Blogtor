@@ -26,15 +26,15 @@
     <div class="blog-list-wrapper">
         <div class="blog-list">
             <ul>
-                {% if posts %}
+                {% if posts|default(null) %}
                    {% for post in posts %}
                        <li class="blog-card-wrapper">
                            <div class="blog-card">
                                <div class="blog-body">
-                                   <span>{{ post.content }}</span>
+                                   <span>{{ post.content|trim }}</span>
                                </div>
                                <div class="blog-footer">
-                                   <span>{{ post.date }}</span>
+                                   <span>{{ post.date|date }}</span>
                                </div>
                            </div>
                        </li>
