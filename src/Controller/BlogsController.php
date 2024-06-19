@@ -21,27 +21,22 @@ use Symfony\Polyfill\Intl\Icu\Exception\NotImplementedException;
 
 class BlogsController extends AbstractController
 {
-    private BlogPostFetchService $blogPostFetchService;
+    private readonly BlogPostFetchService $blogPostFetchService;
+    private EntityManagerInterface $em;
 
-    public function __construct(HttpClientInterface $httpClient,
-                                BlogPostFetchService $blogPostFetchService)
+    public function __construct(BlogPostFetchService $blogPostFetchService, EntityManagerInterface $em)
     {
         $this->blogPostFetchService = $blogPostFetchService;
+        $this->em = $em;
     }
 
-    /**
-     * @throws TransportExceptionInterface
-     * @throws ServerExceptionInterface
-     * @throws RedirectionExceptionInterface
-     * @throws ClientExceptionInterface
-     */
+
     #[Route('/blog/posts', name: 'app_blog_posts', methods: ['GET'])]
-    public function index(Request $request,
-                          BlogPostFetchService $postFetchService,
-                          EntityManagerInterface $em,
-                          UserInterface $user): Response
+    public function index(UserInterface $user): Response
     {
-        if (!$user instanceof User) { return $this->redirectToRoute('app_login'); }
+        if (!$user instanceof User) {
+            return $this->redirectToRoute('app_login', [], Response::HTTP_SEE_OTHER);
+        }
         return $this->render('blog_overview/index.html.twig', [
             'user_email' => $user->getEmail(),
             'posts' => $this->blogPostFetchService->fetchPost(true)
@@ -54,40 +49,45 @@ class BlogsController extends AbstractController
     }
 
     #[Route('/blog/post/{id}', name: 'app_blog_post', methods: ['GET'])]
-    function post(Request $request, EntityManagerInterface $em): JsonResponse
+    function post(Request $request): JsonResponse
     {
         $id = $request->get('id');
-        $blogPost = $em->getRepository(Blogs::class)->find($id);
+        $blogPost = $this->em->getRepository(Blogs::class)->find($id);
         if ($blogPost) {
             return new JsonResponse([
                 'title' => $blogPost->getTitle(),
                 'content' => $blogPost->getContent(),
                 'date' => $blogPost->getDate()->getTimestamp()
             ]);
-        } else {
-            return $this->json([
-                'message' => 'nothing found'
-            ]);
         }
+        return $this->json([
+            'message' => 'nothing found'
+        ], Response::HTTP_NOT_FOUND);
     }
 
     #[Route('/blog/posts/all', name: 'app_blog_post_all', methods: ['GET'])]
-    function posts(Request $request, EntityManagerInterface $em): JsonResponse
+    function posts(): JsonResponse
     {
-        $blogPosts = $em->getRepository(Blogs::class)->findAll();
-        $posts = [];
-        foreach ($blogPosts as $blogPost) {
-            $posts[] = [
-                'title' => $blogPost->getTitle(),
-                'content' => $blogPost->getContent(),
-                'date' => $blogPost->getDate()->getTimestamp()
-            ];
-        }
-        if (empty($posts)) {
+        $blogPosts = $this->em->getRepository(Blogs::class)->findAll();
+
+        if (empty($blogPosts)) {
             return $this->json([
                 'message' => 'nothing found'
-            ]);
+            ], Response::HTTP_NOT_FOUND);
         }
+
+        $posts = array_map([
+            $this, 'transformBlogPosts'
+        ], $blogPosts);
+
         return $this->json($posts);
+    }
+
+    private function transformBlogPosts(Blogs $blogPost): array {
+        return [
+            'title' => $blogPost->getTitle(),
+            'content' => $blogPost->getContent(),
+            'date' => $blogPost->getDate()->getTimestamp()
+        ];
     }
 }
