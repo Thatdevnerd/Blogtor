@@ -20,7 +20,11 @@ use Symfony\Contracts\HttpClient\HttpClientInterface;
 
 class BlogsController extends AbstractController
 {
-    public function __construct(HttpClientInterface $httpClient) {}
+    private BlogPostFetchService $blogPostFetchService;
+
+    public function __construct(HttpClientInterface $httpClient, BlogPostFetchService $blogPostFetchService) {
+        $this->blogPostFetchService = $blogPostFetchService;
+    }
 
     /**
      * @throws TransportExceptionInterface
@@ -34,22 +38,15 @@ class BlogsController extends AbstractController
                           EntityManagerInterface $em,
                           UserInterface $user): Response
     {
-        if ($user instanceof User) {
-            $response = $postFetchService->fetchPost(true );
-
-            var_dump($response);
-
-            return $this->render('blog_overview/index.html.twig', [
-                'user_email' => $user->getEmail(),
-            ]);
-        }
-        return $this->json([
-            'error' => 'Unauthorized access'
+        if (!$user instanceof User) { return $this->redirectToRoute('app_login'); }
+        return $this->render('blog_overview/index.html.twig', [
+            'user_email' => $user->getEmail(),
+            'posts' => $this->blogPostFetchService->fetchPost(true)
         ]);
     }
 
 
-    #[Route('/blog/posts/{id}', name: 'app_blog_post', methods: ['GET'])]
+    #[Route('/blog/post/{id}', name: 'app_blog_post', methods: ['GET'])]
     function post(Request $request, EntityManagerInterface $em): JsonResponse
     {
         $id = $request->get('id');
@@ -78,6 +75,11 @@ class BlogsController extends AbstractController
                 'content' => $blogPost->getContent(),
                 'date' => $blogPost->getDate()->getTimestamp()
             ];
+        }
+        if (empty($posts)) {
+            return $this->json([
+                'message' => 'nothing found'
+            ]);
         }
         return $this->json($posts);
     }
