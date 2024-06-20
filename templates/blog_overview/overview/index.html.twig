@@ -7,9 +7,9 @@
     <div class="blog-list-wrapper">
         <div class="blog-list">
             <ul>
+                <li class="blog-card-wrapper">
                 {% if posts|default(null) %}
                    {% for post in posts %}
-                       <li class="blog-card-wrapper">
                            <div class="blog-card">
                                <div class="blog-body">
                                    <span>{{ post.content|trim }}</span>
@@ -18,14 +18,14 @@
                                    <span>{{ post.date|date }}</span>
                                </div>
                            </div>
-                       </li>
                     {% endfor %}
                 {% endif %}
+                </li>
                 {% if not posts %}
                     <li class="blog-card-wrapper">
                         <div class="blog-card">
                             <div class="blog-body">
-                                <span>No posts found</span>
+                                <span>No posts found 😭</span>
                             </div>
                         </div>
                     </li>
@@ -34,4 +34,8 @@
         </div>
     </div>
 </div>
+{% endblock %}
+
+{% block scripts %}
+    <script src="{{ asset('js/blog.js') }}"></script>
 {% endblock %}
