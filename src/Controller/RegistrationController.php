@@ -21,6 +21,7 @@ class RegistrationController extends AbstractController
         $this->authService = $authService;
     }
 
+
     #[Route('/register', name: 'app_register', methods: ['GET', 'POST'])]
     public function register(Request $request): Response
     {

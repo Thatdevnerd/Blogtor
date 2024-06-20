@@ -9,11 +9,17 @@ use Symfony\Component\Validator\Validator\ValidatorInterface;
 use Symfony\Contracts\HttpClient\Exception\ClientExceptionInterface;
 use Symfony\Contracts\HttpClient\Exception\RedirectionExceptionInterface;
 use Symfony\Contracts\HttpClient\Exception\ServerExceptionInterface;
-use Symfony\Contracts\HttpClient\HttpClientInterface;
 
 class BlogService {
 
+    /**
+     * @var EntityManagerInterface
+     */
     private EntityManagerInterface $em;
+
+    /**
+     * @var ValidatorInterface
+     */
     private readonly ValidatorInterface $validator;
 
     public function __construct(EntityManagerInterface $em,
@@ -37,9 +43,8 @@ class BlogService {
     {
         if (!$all) {
             return $this->em->getRepository(Blogs::class)->find($id);
-        } else {
-            return $this->em->getRepository(Blogs::class)->findAll();
         }
+        return $this->em->getRepository(Blogs::class)->findAll();
     }
 
     /**

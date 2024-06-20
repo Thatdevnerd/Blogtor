@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="{{ asset('css/blog.css') }}">
+
+    {% block stylesheets %}{% endblock %}
+    <title>{% block title %}Welcome to blog{% endblock %}</title>
+</head>
+<body>
+    {% block body %}
+       <div class="nav-wrapper">
+           <nav class="horizontal-nav">
+{#               <header class="logo">#}
+{#                   <h1>Blog</h1>#}
+{#               </header>#}
+               <ul>
+                   <li><a href="{{ path('app_blog_posts') }}">Home</a></li>
+                   <li><a href="{{ path('app_logout') }}">Logout</a></li>
+               </ul>
+           </nav>
+        </div>
+        <main>
+            {% block content %}{% endblock %}
+        </main>
+    {% endblock %}
+</body>
+</html>
