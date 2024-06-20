@@ -1,9 +1,10 @@
 document.addEventListener('DOMContentLoaded', () => {
-    const cardCount = 0;
-    let card = document.getElementsByClassName('.blog-card');
+    let cardCount = 0;
+    let cardCollection = document.getElementsByClassName('blog-card');
 
-    for(let i = 0; i < card.length; i++) {
-        card = card + 1;
+    for(let i = 0; i < cardCollection.length; i++) {
+        console.log(cardCollection[i]);
+        cardCount++;
     }
 
     console.log(cardCount);
