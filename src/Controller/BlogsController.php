@@ -56,12 +56,7 @@ class BlogsController extends AbstractController
     function post(Request $request): JsonResponse
     {
         ['id' => $id] = $request->request->all();
-        $post = $this->blogService->getSinglePost($id);
-        if(!$post) {
-            return $this->json([
-                'message' => 'nothing found'
-            ], Response::HTTP_NOT_FOUND);
-        }
+        $post = $this->blogService->fetchPost(false, $id);
         return $this->json($post);
     }
 

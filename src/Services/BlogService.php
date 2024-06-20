@@ -17,7 +17,7 @@ use Symfony\Contracts\HttpClient\HttpClientInterface;
 class BlogService {
     private EntityManagerInterface $em;
     private readonly ValidatorInterface $validator;
-    private readonly HttpClientInterface $http;
+    private HttpClientInterface $http;
 
     public function __construct(EntityManagerInterface $em,
                                 ValidatorInterface $validator,
@@ -31,24 +31,29 @@ class BlogService {
     /**
      * @param bool $all
      * @param int|null $id
-     * @return JsonResponse
+     * @return array|Blogs[]|object[]
      *
      * @throws ClientExceptionInterface
      * @throws RedirectionExceptionInterface
      * @throws ServerExceptionInterface
      */
-    public function fetchPost(bool $all = false, int $id = null): JsonResponse
+    public function fetchPost(bool $all = false, int $id = null): array
     {
         if (!$all) {
-            $post = $this->em->getRepository(Blogs::class)->find($id);
-            return new JsonResponse(array_map([$this, 'transformBlogPosts'], $post));
+            return $this->em->getRepository(Blogs::class)->find($id);
         } else {
-            $posts = $this->em->getRepository(Blogs::class)->findAll();
-            return new JsonResponse(array_map([$this, 'transformBlogPosts'], $posts));
+            return $this->em->getRepository(Blogs::class)->findAll();
         }
     }
 
-    public function createPost(Request $request, Blogs $blog) {
+    /**
+     * @param Request $request
+     * @param Blogs $blog
+     *
+     * @return void
+     */
+    public function createPost(Request $request, Blogs $blog): void
+    {
         [
             'title' => $title,
             'content' => $content,
@@ -63,7 +68,12 @@ class BlogService {
         $this->em->flush();
     }
 
-    private function validateDTO(Blogs $blog) {
+    /**
+     * @param Blogs $blog
+     * @return void
+     */
+    private function validateDTO(Blogs $blog): void
+    {
         $dto = new BlogDTO(
             $blog->getTitle(),
             $blog->getContent(),
@@ -75,6 +85,10 @@ class BlogService {
         }
     }
 
+    /**
+     * @param Blogs $blogPost
+     * @return array
+     */
     private function transformBlogPosts(Blogs $blogPost): array {
         return [
             'title' => $blogPost->getTitle(),
