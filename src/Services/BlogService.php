@@ -4,28 +4,24 @@ namespace App\Services;
 use App\DTO\BlogDTO;
 use App\Entity\Blogs;
 use Doctrine\ORM\EntityManagerInterface;
-use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 use Symfony\Contracts\HttpClient\Exception\ClientExceptionInterface;
 use Symfony\Contracts\HttpClient\Exception\RedirectionExceptionInterface;
 use Symfony\Contracts\HttpClient\Exception\ServerExceptionInterface;
-use Symfony\Contracts\HttpClient\Exception\TransportExceptionInterface;
 use Symfony\Contracts\HttpClient\HttpClientInterface;
 
 class BlogService {
+
     private EntityManagerInterface $em;
     private readonly ValidatorInterface $validator;
-    private HttpClientInterface $http;
 
     public function __construct(EntityManagerInterface $em,
                                 ValidatorInterface $validator,
-                                HttpClientInterface $http
-    ) {
+    )
+    {
         $this->em = $em;
         $this->validator = $validator;
-        $this->http = $http;
     }
 
     /**
@@ -83,17 +79,5 @@ class BlogService {
         if (count($errors) > 0) {
             throw new \InvalidArgumentException('Invalid data');
         }
-    }
-
-    /**
-     * @param Blogs $blogPost
-     * @return array
-     */
-    private function transformBlogPosts(Blogs $blogPost): array {
-        return [
-            'title' => $blogPost->getTitle(),
-            'content' => $blogPost->getContent(),
-            'date' => $blogPost->getDate()->getTimestamp()
-        ];
     }
 }

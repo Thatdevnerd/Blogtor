@@ -37,33 +37,18 @@ class BlogsController extends AbstractController
         if (!$user instanceof User) {
             return $this->redirectToRoute('app_login', [], Response::HTTP_SEE_OTHER);
         }
-        return $this->render('blog_overview/index.html.twig', [
+        return $this->render('blog_overview/overview/index.html.twig', [
             'user_email' => $user->getEmail(),
             'posts' => $this->blogService->fetchPost(true)
         ]);
     }
 
     #[Route('/blog/create', name: 'app_blog_create', methods: ['GET'])]
-    public function blogCreate(Request $request, Blogs $blogs): JsonResponse
+    public function create(Request $request, Blogs $blogs): JsonResponse
     {
         $this->blogService->createPost($request, $blogs);
         return new JsonResponse([
             'message' => 'Blog post created'
         ], Response::HTTP_CREATED);
-    }
-
-    #[Route('/blog/post/{id}', name: 'app_blog_post', methods: ['GET'])]
-    function post(Request $request): JsonResponse
-    {
-        ['id' => $id] = $request->request->all();
-        $post = $this->blogService->fetchPost(false, $id);
-        return $this->json($post);
-    }
-
-    #[Route('/blog/posts/all', name: 'app_blog_post_all', methods: ['GET'])]
-    function posts(): JsonResponse
-    {
-        $posts = $this->blogService->fetchPost(true);
-        return $this->json($posts);
     }
 }
