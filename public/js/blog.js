@@ -4,11 +4,12 @@ document.addEventListener('DOMContentLoaded', () => {
     let cardCollection = document.getElementsByClassName('blog-card');
 
     for(let i = 0; i < cardCollection.length; i++) {
-        const targetSpan = cardCollection[i].getElementsByTagName("span")[0];
-        if (cardCollection[i].getElementsByTagName("span")[0].innerHTML.includes("No posts found")) {
+        const targetSpanInner = cardCollection[i].getElementsByTagName("span")[0].innerHTML;
+        if (targetSpanInner.includes("No posts found")) {
             noPosts = true
+        } else {
+            cardCount++;
         }
-        cardCount++;
     }
     console.log(cardCount, noPosts ? "No posts found" : "Posts found");
 });
