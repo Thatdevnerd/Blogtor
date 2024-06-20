@@ -21,6 +21,15 @@
                        </li>
                     {% endfor %}
                 {% endif %}
+                {% if not posts %}
+                    <li class="blog-card-wrapper">
+                        <div class="blog-card">
+                            <div class="blog-body">
+                                <span>No posts found</span>
+                            </div>
+                        </div>
+                    </li>
+                {% endif %}
             </ul>
         </div>
     </div>
