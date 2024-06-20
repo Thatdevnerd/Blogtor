@@ -4,7 +4,9 @@ namespace App\Services;
 use App\DTO\BlogDTO;
 use App\Entity\Blogs;
 use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 use Symfony\Contracts\HttpClient\Exception\ClientExceptionInterface;
 use Symfony\Contracts\HttpClient\Exception\RedirectionExceptionInterface;
@@ -29,25 +31,21 @@ class BlogService {
     /**
      * @param bool $all
      * @param int|null $id
-     * @return array
+     * @return JsonResponse
      *
      * @throws ClientExceptionInterface
      * @throws RedirectionExceptionInterface
      * @throws ServerExceptionInterface
-     * @throws TransportExceptionInterface
      */
-    public function fetchPost(bool $all = false, int $id = null): array {
+    public function fetchPost(bool $all = false, int $id = null): JsonResponse
+    {
         if (!$all) {
-            if (is_null($id)) { return ['error' => 'id is null']; }
-            $response = $this->http->request('GET', 'http://localhost:8000/blog/posts/' . $id, [
-                'verify_peer' => false
-            ]);
+            $post = $this->em->getRepository(Blogs::class)->find($id);
+            return new JsonResponse(array_map([$this, 'transformBlogPosts'], $post));
         } else {
-            $response = $this->http->request('GET', 'http://localhost:8000/blog/posts/all', [
-                'verify_peer' => false
-            ]);
+            $posts = $this->em->getRepository(Blogs::class)->findAll();
+            return new JsonResponse(array_map([$this, 'transformBlogPosts'], $posts));
         }
-        return json_decode($response->getContent(), true);
     }
 
     public function createPost(Request $request, Blogs $blog) {
@@ -75,5 +73,13 @@ class BlogService {
         if (count($errors) > 0) {
             throw new \InvalidArgumentException('Invalid data');
         }
+    }
+
+    private function transformBlogPosts(Blogs $blogPost): array {
+        return [
+            'title' => $blogPost->getTitle(),
+            'content' => $blogPost->getContent(),
+            'date' => $blogPost->getDate()->getTimestamp()
+        ];
     }
 }

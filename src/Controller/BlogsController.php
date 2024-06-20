@@ -55,43 +55,20 @@ class BlogsController extends AbstractController
     #[Route('/blog/post/{id}', name: 'app_blog_post', methods: ['GET'])]
     function post(Request $request): JsonResponse
     {
-        $id = $request->get('id');
-        $blogPost = $this->em->getRepository(Blogs::class)->find($id);
-        if ($blogPost) {
-            return new JsonResponse([
-                'title' => $blogPost->getTitle(),
-                'content' => $blogPost->getContent(),
-                'date' => $blogPost->getDate()->getTimestamp()
-            ]);
+        ['id' => $id] = $request->request->all();
+        $post = $this->blogService->getSinglePost($id);
+        if(!$post) {
+            return $this->json([
+                'message' => 'nothing found'
+            ], Response::HTTP_NOT_FOUND);
         }
-        return $this->json([
-            'message' => 'nothing found'
-        ], Response::HTTP_NOT_FOUND);
+        return $this->json($post);
     }
 
     #[Route('/blog/posts/all', name: 'app_blog_post_all', methods: ['GET'])]
     function posts(): JsonResponse
     {
-        $blogPosts = $this->em->getRepository(Blogs::class)->findAll();
-
-        if (empty($blogPosts)) {
-            return $this->json([
-                'message' => 'nothing found'
-            ], Response::HTTP_NOT_FOUND);
-        }
-
-        $posts = array_map([
-            $this, 'transformBlogPosts'
-        ], $blogPosts);
-
+        $posts = $this->blogService->fetchPost(true);
         return $this->json($posts);
-    }
-
-    private function transformBlogPosts(Blogs $blogPost): array {
-        return [
-            'title' => $blogPost->getTitle(),
-            'content' => $blogPost->getContent(),
-            'date' => $blogPost->getDate()->getTimestamp()
-        ];
     }
 }
