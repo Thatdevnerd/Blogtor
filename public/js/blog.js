@@ -16,26 +16,35 @@ document.addEventListener('DOMContentLoaded', () => {
         return cardCount;
     }
 
-    const pagination = (collection, page_size, page_number) => {
+    const paginationCalc = (collection, page_size, page_number) => {
         let array = [].slice.call(collection);
-        return array.slice((page_number - 1) * page_size, page_number * page_size);
+        return {
+            array: array,
+            slice: array.slice((page_number - 1) * page_size, page_number * page_size)
+        }
     }
-
 
     const renderPaginationButtons = () => {
         for (let i = 0; i < cardCollectionLength; i++) {
+            i = i++
+            i = i.toString()
             const btn = document.createElement('button');
-            btn.setAttribute('data-page', i++);
-            btn.innerHTML = i++;
+            btn.setAttribute('data-page', i);
+            btn.innerHTML = i;
             document.getElementById('pagination');
         }
+    }
+
+    const drawPaginatedCards = (page) => {
+        const paginationCalc = paginationCalc(cardCollection, 3, page);
+        const cardArray = paginationCalc[0];
     }
 
     document.addEventListener('click', (e) => {
         if (e.target instanceof HTMLButtonElement) {
             const clickedBtn = e.target;
             const pageNumber = parseInt(clickedBtn.getAttribute('data-page'));
-            const page = pagination(cardCollection, 2, pageNumber);
+            const page = paginationCalc(cardCollection, 3, pageNumber);
             console.log(page);
         }
     });
