@@ -4,65 +4,41 @@ namespace App\Controller;
 
 use App\Entity\User;
 use App\Form\RegistrationFormType;
-use Doctrine\ORM\EntityManagerInterface;
+use App\Services\AuthService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
+use Symfony\Component\PasswordHasher\PasswordHasherInterface;
 use Symfony\Component\Routing\Attribute\Route;
 
 class RegistrationController extends AbstractController
 {
-    private bool $emailIsValid = false;
 
-    #[Route('/register', name: 'app_register', methods: ['GET'])]
-    public function register(Request $request,
-                             UserPasswordHasherInterface $userPasswordHasher,
-                             EntityManagerInterface $entityManager): Response
+    private AuthService $authService;
+
+    public function __construct(AuthService $authService)
     {
-        $user = new User();
+        $this->authService = $authService;
+    }
 
-        $form = $this->createForm(RegistrationFormType::class, $user);
+    #[Route('/register', name: 'app_register', methods: ['GET', 'POST'])]
+    public function register(Request $request): Response
+    {
+        $form = $this->createForm(RegistrationFormType::class);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $this->emailIsValid = $this->validateEmail($form->get('emil')->getData());
-            if ($this->emailIsValid) {
-                $user->setPassword(
-                    $userPasswordHasher->hashPassword(
-                        $user,
-                        $form->get('plainPassword')->getData()
-                    )
-                );
-
-                $entityManager->persist($user);
-                $entityManager->flush();
+            $userCreated = $this->authService->createUser($form, new User());
+            if ($userCreated) {
                 return $this->redirectToRoute('app_login');
             }
-
-            //TODO Get the email_error to display
             return $this->render('registration/register.html.twig', [
-                'registrationForm' => $form,
-                'email_error' => $this->emailIsValid ? null : 'Invalid email address'
+                'registrationForm' => $form->createView(),
+                'error' => 'User could not be created. Please try again.'
             ]);
         }
-
         return $this->render('registration/register.html.twig', [
-            'registrationForm' => $form
+            'registrationForm' => $form->createView(),
         ]);
-    }
-
-    //TODO Replace this with symfony built in email validation
-    private function validateEmail(String $email): bool {
-        if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-            return false;
-        }
-
-        $pattern = '/\.[a-zA-Z]{2,}$/';
-        if (!preg_match($pattern, $email)) {
-            return false;
-        }
-
-        return true;
     }
 }
