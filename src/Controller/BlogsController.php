@@ -4,7 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Blogs;
 use App\Entity\User;
-use App\Services\BlogPostFetchService;
+use App\Services\BlogService;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -12,17 +12,22 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Core\User\UserInterface;
-use Symfony\Polyfill\Intl\Icu\Exception\NotImplementedException;
+use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 class BlogsController extends AbstractController
 {
-    private readonly BlogPostFetchService $blogPostFetchService;
     private EntityManagerInterface $em;
+    private ValidatorInterface $validator;
+    private BlogService $blogService;
 
-    public function __construct(BlogPostFetchService $blogPostFetchService, EntityManagerInterface $em)
+    public function __construct(EntityManagerInterface $em,
+                                ValidatorInterface     $validator,
+                                BlogService            $blogService
+    )
     {
-        $this->blogPostFetchService = $blogPostFetchService;
         $this->em = $em;
+        $this->validator = $validator;
+        $this->blogService = $blogService;
     }
 
 
@@ -34,13 +39,17 @@ class BlogsController extends AbstractController
         }
         return $this->render('blog_overview/index.html.twig', [
             'user_email' => $user->getEmail(),
-            'posts' => $this->blogPostFetchService->fetchPost(true)
+            'posts' => $this->blogService->fetchPost(true)
         ]);
     }
 
     #[Route('/blog/create', name: 'app_blog_create', methods: ['GET'])]
-    public function blogCreate() {
-        throw new NotImplementedException('This method is not implemented');
+    public function blogCreate(Request $request, Blogs $blogs): JsonResponse
+    {
+        $this->blogService->createPost($request, $blogs);
+        return new JsonResponse([
+            'message' => 'Blog post created'
+        ], Response::HTTP_CREATED);
     }
 
     #[Route('/blog/post/{id}', name: 'app_blog_post', methods: ['GET'])]
