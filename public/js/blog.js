@@ -1,12 +1,13 @@
 document.addEventListener('DOMContentLoaded', () => {
-    let noPosts = false;
-    let cardCollection = document.getElementsByClassName('blog-card');
-    let cardParent = document.getElementsByClassName("blog-card-wrapper")[0]
-    let cardCollectionLength = cardCollection.length;
-
     const DEFAULT_PAGE = 1;
+    const PAGE_SIZE = 3;
 
-    let cardHistoryObj = [{}];
+    let noPosts = false;
+
+    let cardCollection = document.getElementsByClassName('blog-card');
+    let cardCollectionLength = cardCollection.length;
+    let cardParent = document.getElementsByClassName("blog-card-wrapper")[0];
+
     let cardObj = [{}];
 
     const countCards = () => {
@@ -14,7 +15,7 @@ document.addEventListener('DOMContentLoaded', () => {
         for(let i = 0; i < cardCollectionLength; i++) {
             const targetSpanInner = cardCollection[i].getElementsByTagName("span")[0].innerHTML;
             if (targetSpanInner.includes("No posts found")) {
-                noPosts = true
+                noPosts = true;
             } else {
                 cardCount++;
             }
@@ -22,12 +23,18 @@ document.addEventListener('DOMContentLoaded', () => {
         return cardCount;
     }
 
-    const paginationCalc = (collection, page_size, page_number) => {
-        let array = [].slice.call(collection);
-        return {
-            array: array,
-            slice: array.slice((page_number - 1) * page_size, page_number * page_size)
-        }
+    const paginationCalc = (collection, pageSize, pageNumber) => {
+        const startIndex = (pageNumber - 1) * pageSize;
+        const endIndex = pageNumber * pageSize;
+        return collection.slice(startIndex, endIndex);
+    };
+
+    const renderPaginatedCards = (page, obj) => {
+        cardParent.innerHTML = '';  // Clear existing cards
+        const paginatedCards = paginationCalc(cardCollection, PAGE_SIZE, page);
+        paginatedCards.forEach(card => {
+            cardParent.appendChild(card);
+        });
     }
 
     const renderPaginationButtons = () => {
@@ -40,39 +47,20 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    const renderPaginatedCards = (page, obj) => {
-        const calc = paginationCalc(cardCollection, 3, page);
-        let cardToRender = document.createElement('div');
-        cardToRender.append(obj[page][1][0].element);
-    }
-
     document.addEventListener('click', (e) => {
-        const clickedBtn = e.target;
-        const pageNumber = parseInt(clickedBtn.getAttribute('data-page'));
-        const page = paginationCalc(cardCollection, 3, pageNumber)
-
-        if (countCards() >= 3) {
-            for(let i = 0; i < page.array.length; i++) {
-                cardObj.push({
-                    [1]: { //this mimics the designated page number
-                        [i]: {
-                            element: page.array[i],
-                        }
-                    }
-                })
-                console.log('loading in card', page.array[i], 'card obj', cardObj);
-            }
-            renderPaginatedCards(1, cardObj);
-        }
+        const pageNumber = parseInt(e.target.getAttribute('data-page'));
+        renderPaginatedCards(pageNumber);
     });
 
     /**
      * IIFE to render paginated cards and pagination buttons
      */
     (async() => {
-        if (countCards() > 0) {
+        const cardCount = countCards();
+        if (cardCount > 0) {
+            const numPages = Math.ceil(cardCount / PAGE_SIZE);
             renderPaginatedCards(DEFAULT_PAGE);
-            renderPaginationButtons();
+            renderPaginationButtons(numPages);
         }
     })();
 });
