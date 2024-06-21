@@ -1,7 +1,7 @@
 document.addEventListener('DOMContentLoaded', () => {
     let noPosts = false;
     let cardCollection = document.getElementsByClassName('blog-card');
-    let cardParent = document.getElementsByClassName("blog-card-wrapper")[0];
+    let cardParent = document.getElementsByClassName("blog-card-wrapper")[0]
     let cardCollectionLength = cardCollection.length;
 
 
@@ -76,8 +76,8 @@ document.addEventListener('DOMContentLoaded', () => {
             }
 
             let cardToRender = document.createElement('div');
-            // cardParent.appendChild(cardToRender);
-            cardParent.appendChild(cardObj[1][1]);
+            console.log(cardObj[1][1]);
+            cardParent.append(cardObj[1][1][0].element)
         }
     });
 
