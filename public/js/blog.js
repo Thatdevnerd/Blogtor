@@ -4,7 +4,6 @@ document.addEventListener('DOMContentLoaded', () => {
     let cardParent = document.getElementsByClassName("blog-card-wrapper")[0]
     let cardCollectionLength = cardCollection.length;
 
-
     const DEFAULT_PAGE = 1;
 
     let cardHistoryObj = [{}];
@@ -41,13 +40,10 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    const renderPaginatedCards = (page) => {
+    const renderPaginatedCards = (page, obj) => {
         const calc = paginationCalc(cardCollection, 3, page);
-        const cardArray = calc.array;
-
-        for (let i = 0; i < cardArray.length; i++) {
-            const card = cardArray[i];
-        }
+        let cardToRender = document.createElement('div');
+        cardToRender.append(obj[page][1][0].element);
     }
 
     document.addEventListener('click', (e) => {
@@ -55,29 +51,18 @@ document.addEventListener('DOMContentLoaded', () => {
         const pageNumber = parseInt(clickedBtn.getAttribute('data-page'));
         const page = paginationCalc(cardCollection, 3, pageNumber)
 
-
         if (countCards() >= 3) {
-            const bodyRect = document.body.getBoundingClientRect()
-            const elemRect = page.array[0].getBoundingClientRect();
-
             for(let i = 0; i < page.array.length; i++) {
                 cardObj.push({
-                    [1]: {
+                    [1]: { //this mimics the designated page number
                         [i]: {
                             element: page.array[i],
-                            top: elemRect.top - bodyRect.top,
-                            left: elemRect.left - bodyRect.left,
-                            width: page.array[i].offsetWidth,
-                            height: page.array[i].offsetHeight
                         }
                     }
                 })
                 console.log('loading in card', page.array[i], 'card obj', cardObj);
             }
-
-            let cardToRender = document.createElement('div');
-            console.log(cardObj[1][1]);
-            cardParent.append(cardObj[1][1][0].element)
+            renderPaginatedCards(1, cardObj);
         }
     });
 
