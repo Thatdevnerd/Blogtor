@@ -34,8 +34,7 @@ security:
     # Easy way to control access for large sections of your site
     # Note: Only the *first* access control that matches will be used
     access_control:
-         - { path: ^/admin/^, roles: ROLE_ADMIN }
-         - { path: ^/blog/post, roles: ROLE_ADMIN, methods: [POST], requires_channel: https }
+         - { path: /blog/^, roles: ROLE_ADMIN, methods: [GET],  requires_channel: https }
 
 when@test:
     security:

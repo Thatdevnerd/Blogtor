@@ -13,7 +13,7 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
 #[AsCommand(
-    name: 'generate:test-admin',
+    name: 'generate:test-user',
     description: 'Generate a test admin account for the application',
 )]
 class GenerateTestUserCommand extends Command
@@ -65,7 +65,7 @@ class GenerateTestUserCommand extends Command
 
         $user->setEmail($username);
         $user->setPassword($password);
-        $user->setRoles(['ROLE_ADMIN']);
+        $user->setRoles([$role]);
 
         $this->em->persist($user);
         $this->em->flush();

@@ -6,29 +6,19 @@ use App\Entity\Blogs;
 use App\Entity\User;
 use App\Form\BlogsFormType;
 use App\Services\BlogService;
-use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Core\User\UserInterface;
-use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 class BlogsController extends AbstractController
 {
-    private EntityManagerInterface $em;
-    private ValidatorInterface $validator;
     private BlogService $blogService;
 
-    public function __construct(EntityManagerInterface $em,
-                                ValidatorInterface     $validator,
-                                BlogService            $blogService,
-    )
-    {
-        $this->em = $em;
-        $this->validator = $validator;
+    public function __construct(BlogService $blogService) {
+
         $this->blogService = $blogService;
     }
 

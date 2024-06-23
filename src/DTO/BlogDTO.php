@@ -5,18 +5,21 @@ use Symfony\Component\Validator\Constraint as Assert;
 
 class BlogDTO {
 
-    /*
+    /**
      * @Assert\NotBlank
+     * @Assert\Length(min=5)
      */
     public string $title;
 
-    /*
+    /**
      * @Assert\NotBlank
+     * @Assert\Length(min=10)
      */
     public string $content;
 
-    /*
+    /**
      * @Assert\NotBlank
+     * @Assert\DateTime
      */
     public \DateTime $date;
 
