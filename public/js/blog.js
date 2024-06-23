@@ -12,16 +12,16 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const countCards = () => {
         let cardCount = 0;
-        for(let i = 0; i < cardCollectionLength; i++) {
-            const targetSpanInner = cardCollection[i].getElementsByTagName("span")[0].innerHTML;
+        cardCollection.forEach(card => {
+            const targetSpanInner = card.getElementsByTagName("span")[0].innerHTML;
             if (targetSpanInner.includes("No posts found")) {
                 noPosts = true;
             } else {
                 cardCount++;
             }
-        }
-        return cardCount;
-    }
+        if (cardCount === 0) return null;
+        if (cardCount > 0) return cardCount;
+    });
 
     const paginationCalc = (collection, pageSize, pageNumber) => {
         const startIndex = (pageNumber - 1) * pageSize;
@@ -63,4 +63,4 @@ document.addEventListener('DOMContentLoaded', () => {
             renderPaginationButtons(numPages);
         }
     })();
-});
+}});

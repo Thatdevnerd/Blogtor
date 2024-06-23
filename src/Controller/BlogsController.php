@@ -4,10 +4,12 @@ namespace App\Controller;
 
 use App\Entity\Blogs;
 use App\Entity\User;
+use App\Form\BlogsFormType;
 use App\Services\BlogService;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
@@ -40,6 +42,20 @@ class BlogsController extends AbstractController
         return $this->render('blog_overview/overview/index.html.twig', [
             'user_email' => $user->getEmail(),
             'posts' => $this->blogService->fetchPost(true)
+        ]);
+    }
+
+    #[Route('/blog/add', name: 'app_blog_add', methods: ['GET'])]
+    public function addBlog(Request $request): RedirectResponse | Response {
+        $form = $this->createForm(BlogsFormType::class);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            return $this->redirectToRoute('app_blog_posts');
+        }
+
+        return $this->render('blog_overview/create/create-blog.html.twig', [
+            'form' => $this->createForm(BlogsFormType::class)->createView()
         ]);
     }
 

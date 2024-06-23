@@ -1,0 +1,20 @@
+{% extends 'blog.html.twig' %}
+
+{% block title %}Create blog{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <div class="blog-form-wrapper">
+            <div class="blog-form">
+                <div>
+                    <h1>Blog post form</h1>
+                </div>
+                {{ form_start(form, {'attr': {'class': 'form'}}) }}
+                {{ form_row(form.title, {'attr': {'class': 'form-input'}}) }}
+                {{ form_row(form.content, {'attr': {'class': 'form-input'}}) }}
+                <button type="submit" class="btn">Create</button>
+                {{ form_end(form) }}
+            </div>
+        </div>
+    </div>
+{% endblock %}

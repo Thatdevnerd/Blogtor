@@ -74,3 +74,8 @@ body {
     list-style: none;
     gap: 2.5rem;
 }
+
+.blog-card-wrapper {
+    display: flex;
+    justify-content: center;
+}
