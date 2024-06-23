@@ -18,9 +18,9 @@ class BlogDTO {
     /*
      * @Assert\NotBlank
      */
-    public int $date;
+    public \DateTime $date;
 
-    public function __construct(string $title, string $content, int $date) {
+    public function __construct(string $title, string $content, \DateTime $date) {
         $this->title = $title;
         $this->content = $content;
         $this->date = $date;

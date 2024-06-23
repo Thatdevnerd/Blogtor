@@ -4,6 +4,7 @@ namespace App\Services;
 use App\DTO\BlogDTO;
 use App\Entity\Blogs;
 use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 use Symfony\Contracts\HttpClient\Exception\ClientExceptionInterface;
@@ -53,32 +54,32 @@ class BlogService {
      *
      * @return void
      */
-    public function createPost(Request $request, Blogs $blog): void
+    public function createPost(FormInterface $form, Blogs $blog): void
     {
-        [
-            'title' => $title,
-            'content' => $content,
-        ] = $request->request->all();
+        $title = $form->get('title')->getData();
+        $content = $form->get('content')->getData();
+        $date = $form->get('date')->getData();
 
-        $this->validateDTO($blog);
+        $this->validateDTO($form);
 
         $blog->setTitle($title);
         $blog->setContent($content);
+        $blog->setDate($date);
 
         $this->em->persist($blog);
         $this->em->flush();
     }
 
     /**
-     * @param Blogs $blog
+     * @param FormInterface $form
      * @return void
      */
-    private function validateDTO(Blogs $blog): void
+    private function validateDTO(FormInterface $form): void
     {
         $dto = new BlogDTO(
-            $blog->getTitle(),
-            $blog->getContent(),
-            $blog->getDate()->getTimestamp()
+            $form->get('title')->getData(),
+            $form->get('content')->getData(),
+            $form->get('date')->getData()
         );
         $errors = $this->validator->validate($dto);
         if (count($errors) > 0) {

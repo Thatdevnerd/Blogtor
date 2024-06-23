@@ -1,0 +1,55 @@
+input, label {
+    display: block;
+}
+
+.blog-card-wrapper {
+    height: 100vh;
+    width: 100vw;
+}
+
+.blog-form {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.blog-form .form {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: #fff;
+    border-radius: 10px;
+    width: 35vw;
+    height: 35vh;
+}
+
+.form-input {
+    margin-bottom: 1.5rem;
+    width: 15vw;
+    height: 2.3vh;
+    border-radius: 10px;
+    border: none;
+    background-color: #bbbaba;
+}
+
+.form-input::placeholder {
+    display: flex;
+    justify-content: center;
+    align-content: center;
+}
+
+.form button {
+    width: 15vw;
+    height: 3vh;
+    border-radius: 10px;
+    border: none;
+    background-color: #85b3ff;
+}
+
+.form-title, h1 {
+    color: white;
+    margin-top: 1rem;
+    margin-bottom: 2rem;
+}

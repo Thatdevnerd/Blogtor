@@ -24,7 +24,7 @@ class BlogsController extends AbstractController
 
     public function __construct(EntityManagerInterface $em,
                                 ValidatorInterface     $validator,
-                                BlogService            $blogService
+                                BlogService            $blogService,
     )
     {
         $this->em = $em;
@@ -45,26 +45,18 @@ class BlogsController extends AbstractController
         ]);
     }
 
-    #[Route('/blog/add', name: 'app_blog_add', methods: ['GET'])]
-    public function addBlog(Request $request): RedirectResponse | Response {
+    #[Route('/blog/add', name: 'app_blog_add', methods: ['GET', 'POST'])]
+    public function addBlog(Request $request, Blogs $blogs): RedirectResponse | Response {
         $form = $this->createForm(BlogsFormType::class);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $this->blogService->createPost($form, $blogs);
             return $this->redirectToRoute('app_blog_posts');
         }
 
         return $this->render('blog_overview/create/create-blog.html.twig', [
             'form' => $this->createForm(BlogsFormType::class)->createView()
         ]);
-    }
-
-    #[Route('/blog/create', name: 'app_blog_create', methods: ['GET'])]
-    public function create(Request $request, Blogs $blogs): JsonResponse
-    {
-        $this->blogService->createPost($request, $blogs);
-        return new JsonResponse([
-            'message' => 'Blog post created'
-        ], Response::HTTP_CREATED);
     }
 }
