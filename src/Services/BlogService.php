@@ -23,8 +23,9 @@ class BlogService {
      */
     private readonly ValidatorInterface $validator;
 
-    public function __construct(EntityManagerInterface $em,
-                                ValidatorInterface $validator,
+    public function __construct(
+        EntityManagerInterface $em,
+        ValidatorInterface $validator,
     )
     {
         $this->em = $em;

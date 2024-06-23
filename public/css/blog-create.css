@@ -21,6 +21,7 @@ input, label {
     align-items: center;
     background-color: #fff;
     border-radius: 10px;
+    border: 5px solid steelblue;
     width: 35vw;
     height: 35vh;
 }
@@ -51,5 +52,5 @@ input, label {
 .form-title, h1 {
     color: white;
     margin-top: 1rem;
-    margin-bottom: 2rem;
+    margin-bottom: 4rem;
 }
