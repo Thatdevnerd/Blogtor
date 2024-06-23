@@ -18,7 +18,6 @@ class BlogsController extends AbstractController
     private BlogService $blogService;
 
     public function __construct(BlogService $blogService) {
-
         $this->blogService = $blogService;
     }
 
@@ -36,7 +35,11 @@ class BlogsController extends AbstractController
     }
 
     #[Route('/blog/add', name: 'app_blog_add', methods: ['GET', 'POST'])]
-    public function addBlog(Request $request, Blogs $blogs): RedirectResponse | Response {
+    public function addBlog(UserInterface $user, Request $request, Blogs $blogs): RedirectResponse | Response {
+        if (!$user instanceof User) {
+            return $this->redirectToRoute('app_login', [], Response::HTTP_SEE_OTHER);
+        }
+
         $form = $this->createForm(BlogsFormType::class);
         $form->handleRequest($request);
 
