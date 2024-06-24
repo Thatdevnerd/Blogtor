@@ -6,17 +6,60 @@
 tbody:before {
     content:"@";
     display:block;
-    line-height:15px;
+    line-height:5px;
     text-indent:-99999px;
 }
 
 thead {
+    background-color: #fff;
+    border: none;
     color: #ef692f;
+    display: block;
+}
+
+tbody {
+    display: block;
+    background-color: #ef692f;
+}
+
+th, td {
+    padding-right: 5rem;
+}
+
+table thead tr th{
+    background-clip: content-box;
+    border: none;
 }
 
 .container {
     height: 100%;
     width: 100%;
+}
+
+.button-wrapper {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 1rem;
+}
+
+.edit-button {
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 7.5%;
+    background-color: #9b2d01;
+    color: white;
+    border: none;
+    border-radius: 5px;
+}
+
+.show-button {
+    width: 100%;
+    height: 7.5%;
+    background-color: #b1e715;
+    color: white;
+    border-bottom: 1px solid black;
+    border-radius: 5px;
 }
 
 .crud-wrapper {
@@ -42,4 +85,5 @@ thead {
 
 .crud table {
     color: white;
+    border-spacing: 0;
 }
