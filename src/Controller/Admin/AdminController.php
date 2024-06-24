@@ -3,17 +3,17 @@
 namespace App\Controller\Admin;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Polyfill\Intl\Icu\Exception\NotImplementedException;
 
 class AdminController extends AbstractController
 {
-    //TODO Implement this
-
     #[Route('/admin/dashboard', name: 'app_admin_admin')]
-    public function index(): Response
+    public function index(Request $request, userInterface $user): Response
     {
-        throw new NotImplementedException("Implement this");
+        return $this->render('admin/index.html.twig');
     }
 }

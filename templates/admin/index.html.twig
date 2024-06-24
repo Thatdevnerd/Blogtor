@@ -1,20 +1,50 @@
-{% extends 'base.html.twig' %}
+{% extends 'blog.html.twig' %}
 
-{% block title %}Hello AdminAdminController!{% endblock %}
+{% block title %}Blog crud{% endblock %}
+
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset('css/crud.css') }}">
+{% endblock %}
 
 {% block body %}
-<style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-</style>
-
-<div class="example-wrapper">
-    <h1>Hello {{ controller_name }}! ✅</h1>
-
-    This friendly message is coming from:
-    <ul>
-        <li>Your controller at <code>/Users/bas/PhpstormProjects/symfony/app/src/Controller/AdminAdminController.php</code></li>
-        <li>Your template at <code>/Users/bas/PhpstormProjects/symfony/app/templates/admin_admin/index.html.twig</code></li>
-    </ul>
-</div>
+    <div class="container">
+        <div class="crud-wrapper">
+            <div class="crud">
+                <div class="table-body">
+                    <table class="table">
+                        <thead class="thead-aligned">
+                        <tr>
+                            <th>Id</th>
+                            <th>Title</th>
+                            <th>Content</th>
+                            <th>Date</th>
+                            <th>actions</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% if blogs|default(null) %}
+                            {% for blog in blogs %}
+                                <tr>
+                                    <td>{{ blog.id }}</td>
+                                    <td>{{ blog.title }}</td>
+                                    <td>{{ blog.content }}</td>
+                                    <td>{{ blog.date ? blog.date|date('Y-m-d H:i:s') : '' }}</td>
+                                    <td>
+                                        <a href="{{ path('app_admin_crud_show', {'id': blog.id}) }}">show</a>
+                                        <a href="{{ path('app_admin_crud_edit', {'id': blog.id}) }}">edit</a>
+                                    </td>
+                                </tr>
+                            {% else %}
+                                <tr>
+                                    <td colspan="5">no records found</td>
+                                </tr>
+                            {% endfor %}
+                        {% endif %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <a href="{{ path('app_admin_crud_new') }}">Create new</a>
+    </div>
 {% endblock %}
