@@ -42,9 +42,14 @@
         {% if app.user %}
             <div class="session-wrapper">
                 <div class="active-session">
-                    <span>
-                      You are logged in as {{ app.user.userIdentifier }}, <a href="{{ path('app_logout') }}">Logout</a>
-                    </span>
+                    <div class="authenticated-notification">
+                        <span>
+                            You are logged in as {{ last_username }}
+                        </span>
+                        <a href="{{ path('app_blog_posts') }}">
+                            Go to overview
+                        </a>
+                    </div>
                 </div>
             </div>
         {% endif %}

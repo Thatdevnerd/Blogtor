@@ -86,4 +86,5 @@ table thead tr th{
 .crud table {
     color: white;
     border-spacing: 0;
+    margin-left: 1rem;
 }

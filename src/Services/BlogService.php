@@ -50,7 +50,7 @@ class BlogService {
     }
 
     /**
-     * @param Request $request
+     * @param FormInterface $form
      * @param Blogs $blog
      *
      * @return void

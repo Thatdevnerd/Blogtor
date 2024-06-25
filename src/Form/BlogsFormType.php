@@ -3,6 +3,7 @@
 namespace App\Form;
 
 use App\Entity\Blogs;
+use EasyCorp\Bundle\EasyAdminBundle\Form\Type\TextEditorType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
@@ -16,11 +17,6 @@ class BlogsFormType extends AbstractType
     {
         $builder
             ->add('title', type: TextType::class)
-            ->add('content', TextareaType::class, [
-                'attr' => [
-                    'rows' => 35
-                ],
-            ])
             ->add('date', DateTimeType::class, [
                 'widget' => 'single_text',
                 'hours' => range(0, 23),

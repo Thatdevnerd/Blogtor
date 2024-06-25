@@ -23,7 +23,11 @@ class BlogDTO {
      */
     public \DateTime $date;
 
-    public function __construct(string $title, string $content, \DateTime $date) {
+    public function __construct(
+        string $title,
+        string $content,
+        \DateTime $date
+    ) {
         $this->title = $title;
         $this->content = $content;
         $this->date = $date;

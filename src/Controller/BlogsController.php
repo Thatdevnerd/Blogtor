@@ -21,7 +21,6 @@ class BlogsController extends AbstractController
         $this->blogService = $blogService;
     }
 
-
     #[Route('/blog/posts', name: 'app_blog_posts', methods: ['GET'])]
     public function index(UserInterface $user): Response
     {

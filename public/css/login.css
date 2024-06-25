@@ -9,6 +9,12 @@ button:hover {
     background-color: #9b2d01;
 }
 
+span {
+    color: white;
+    font-size: 1.5rem;
+    font-weight: bold;
+}
+
 .container {
     display: flex;
     flex-direction: row;
@@ -85,8 +91,31 @@ button:hover {
     height: 15vh;
 }
 
-.active-session span {
-    color: white;
-    font-size: 1.5rem;
-    font-weight: bold;
+.authenticated-notification {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+}
+
+.authenticated-notification a {
+    margin-top: 1rem;
+    background-color: #37d2bb;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 50%;
+    height: 45%;
+    border-radius: 10px;
+    text-decoration: none;
+    color: black;
+}
+
+.authenticated-notification a:hover {
+    transition: ease-in 0.2s;
+    background-color: #269485;
+}
+
+.authenticated-notification, span, a {
+    display: block;
 }

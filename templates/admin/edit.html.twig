@@ -1,13 +1,17 @@
-{% extends 'base.html.twig' %}
+{% extends 'blog.html.twig' %}
 
 {% block title %}Edit Blogs{% endblock %}
 
-{% block body %}
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset('css/crud.css') }}">
+{% endblock %}
+
+{% block content %}
     <h1>Edit Blogs</h1>
 
     {{ include('admin/_form.html.twig', {'button_label': 'Update'}) }}
 
     <a href="{{ path('app_admin_crud_index') }}">back to list</a>
 
-    {{ include('admin_crud/_delete_form.html.twig') }}
+    {{ include('admin/_delete_form.html.twig') }}
 {% endblock %}

@@ -7,15 +7,22 @@ use App\Form\BlogsType;
 use App\Repository\BlogsRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 
-#[Route('/admin/crud')]
+#[Route('/admin')]
 class AdminCrudController extends AbstractController
 {
+
     #[Route('/', name: 'app_admin_crud_index', methods: ['GET'])]
-    public function index(BlogsRepository $blogsRepository): Response
+    public function index(): RedirectResponse {
+        return $this->redirectToRoute('app_admin_crud_overview', [], Response::HTTP_SEE_OTHER);
+    }
+
+    #[Route('/crud', name: 'app_admin_crud_overview', methods: ['GET'])]
+    public function crud(BlogsRepository $blogsRepository): Response
     {
         return $this->render('admin/index.html.twig', [
             'blogs' => $blogsRepository->findAll() ? $blogsRepository->findAll() : "no blogs found",
@@ -32,7 +39,6 @@ class AdminCrudController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager->persist($blog);
             $entityManager->flush();
-
             return $this->redirectToRoute('app_admin_crud_index', [], Response::HTTP_SEE_OTHER);
         }
 
@@ -58,7 +64,6 @@ class AdminCrudController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager->flush();
-
             return $this->redirectToRoute('app_admin_crud_index', [], Response::HTTP_SEE_OTHER);
         }
 
