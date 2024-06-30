@@ -15,11 +15,9 @@ use Symfony\Component\Security\Core\User\UserInterface;
 
 class BlogsController extends AbstractController
 {
-    private BlogService $blogService;
-
-    public function __construct(BlogService $blogService) {
-        $this->blogService = $blogService;
-    }
+    public function __construct(
+        public BlogService $blogService
+    ) {}
 
     #[Route('/blog/posts', name: 'app_blog_posts', methods: ['GET'])]
     public function index(UserInterface $user): Response
