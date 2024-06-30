@@ -15,11 +15,10 @@ use Symfony\Component\Routing\Attribute\Route;
 #[Route('/admin')]
 class AdminCrudController extends AbstractController
 {
-
     #[Route('/', name: 'app_admin_crud_index', methods: ['GET'])]
     public function index(): RedirectResponse {
         return $this->redirectToRoute('app_admin_crud_overview', [], Response::HTTP_SEE_OTHER);
-    }
+    } 
 
     #[Route('/crud', name: 'app_admin_crud_overview', methods: ['GET'])]
     public function crud(BlogsRepository $blogsRepository): Response

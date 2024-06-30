@@ -13,7 +13,7 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 
 #[AsCommand(
     name: 'generate:blog-post',
-    description: 'Generate a new blog post.',
+    description: 'Generate a new blog post.'
 )]
 class GenerateBlogPostCommand extends Command
 {

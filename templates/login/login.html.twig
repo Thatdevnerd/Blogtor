@@ -11,6 +11,7 @@
         <div class="wrapper">
             <div class="login-form">
                 <form method="post">
+
                     {% if error %}
                         <div class="error-wrapper">
                             <div class="form-errors">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
@@ -32,9 +33,7 @@
                             </button>
                         </div>
                     </div>
-                    <input type="hidden" name="_csrf_token"
-                           value="{{ csrf_token('authenticate') }}"
-                    >
+                    <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
                 </form>
             </div>
         </div>

@@ -17,6 +17,7 @@ class BlogsFormType extends AbstractType
     {
         $builder
             ->add('title', type: TextType::class)
+            ->add('content', TextareaType::class)
             ->add('date', DateTimeType::class, [
                 'widget' => 'single_text',
                 'hours' => range(0, 23),

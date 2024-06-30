@@ -33,7 +33,6 @@
                                     <td>{{ blog.date ? blog.date|date('Y-m-d H:i:s') : '' }}</td>
                                     <td>
                                       <div class="button-wrapper">
-                                          <a class="show-button" href="{{ path('app_admin_crud_show', {'id': blog.id}) }}">show</a>
                                           <a class="edit-button" href="{{ path('app_admin_crud_edit', {'id': blog.id}) }}">edit</a>
                                       </div>
                                     </td>

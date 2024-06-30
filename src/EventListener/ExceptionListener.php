@@ -5,6 +5,7 @@ namespace App\EventListener;
 use App\Exceptions\BlogNotFoundException;
 use Symfony\Component\EventDispatcher\Attribute\AsEventListener;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Event\ExceptionEvent;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
@@ -30,9 +31,7 @@ final readonly class ExceptionListener
         }
 
         if ($exception instanceof NotFoundHttpException) {
-            $event->setResponse(new Response(
-                $this->twig->render('errors/404.html.twig', ['message' => 'Blog not found']),
-            ));
+            $event->setResponse(new RedirectResponse('/login'));
         }
     }
 }

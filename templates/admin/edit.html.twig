@@ -7,11 +7,7 @@
 {% endblock %}
 
 {% block content %}
-    <h1>Edit Blogs</h1>
-
-    {{ include('admin/_form.html.twig', {'button_label': 'Update'}) }}
-
-    <a href="{{ path('app_admin_crud_index') }}">back to list</a>
-
-    {{ include('admin/_delete_form.html.twig') }}
+    <div class="blog-edit-wrapper">
+        {{ include('admin/_form.html.twig', {'button_label': 'Update'}) }}
+    </div>
 {% endblock %}

@@ -10,6 +10,10 @@ tbody:before {
     text-indent:-99999px;
 }
 
+input {
+    text-align: center;
+}
+
 thead {
     background-color: #fff;
     border: none;
@@ -87,4 +91,60 @@ table thead tr th{
     color: white;
     border-spacing: 0;
     margin-left: 1rem;
+}
+
+.form-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+}
+
+.blog-edit-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    width: 100%;
+    height: 100%;
+    color: white;
+}
+
+.blog-edit-form {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: #fff;
+    width: 33vw;
+    height: 45vh;
+    padding: 2rem;
+    border-radius: 10px;
+    border: 5px solid steelblue;
+}
+
+.blog-edit-form input {
+    height: 3vh;
+    width: 14.5vw;
+    border-radius: 10px;
+    border: 2px solid steelblue;
+    margin: 1rem;
+}
+
+.btn {
+    margin-top: 1rem;
+    width: 50%;
+    height: 7.5%;
+    background-color: #9b2d01;
+    color: white;
+    border: none;
+    border-radius: 5px;
+}
+
+.blog-edit-form label, input {
+    display: block;
+}
+
+form, .form-title {
+    display: block;
 }
