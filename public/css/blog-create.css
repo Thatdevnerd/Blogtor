@@ -3,6 +3,9 @@ input, label {
 }
 
 .blog-card-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
     height: 100vh;
     width: 100vw;
 }
@@ -22,8 +25,8 @@ input, label {
     background-color: #fff;
     border-radius: 10px;
     border: 5px solid steelblue;
-    width: 35vw;
-    height: 35vh;
+    width: 45vw;
+    height: 45vh;
 }
 
 .form-input {
