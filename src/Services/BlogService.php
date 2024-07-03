@@ -61,30 +61,11 @@ class BlogService {
         $content = $form->get('content')->getData();
         $date = $form->get('date')->getData();
 
-        $this->validateDTO($form);
-
         $blog->setTitle($title);
         $blog->setContent($content);
         $blog->setDate($date);
 
         $this->em->persist($blog);
         $this->em->flush();
-    }
-
-    /**
-     * @param FormInterface $form
-     * @return void
-     */
-    private function validateDTO(FormInterface $form): void
-    {
-        $dto = new BlogDTO(
-            $form->get('title')->getData(),
-            $form->get('content')->getData(),
-            $form->get('date')->getData()
-        );
-        $errors = $this->validator->validate($dto);
-        if (count($errors) > 0) {
-            throw new \InvalidArgumentException('Invalid data');
-        }
     }
 }
