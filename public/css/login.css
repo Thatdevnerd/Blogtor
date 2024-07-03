@@ -119,3 +119,18 @@ span {
 .authenticated-notification, span, a {
     display: block;
 }
+
+@media(max-width: 567px) {
+    span {
+        font-size: 1rem;
+    }
+
+    input {
+        width: 30vw;
+    }
+
+    .session-wrapper {
+        width: 55vw;
+        height: 20vh;
+    }
+}
