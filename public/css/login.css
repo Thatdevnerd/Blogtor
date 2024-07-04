@@ -157,10 +157,10 @@ span {
         flex-direction: column;
         justify-content: center;
     }
-
 }
 
-@media only screen and (max-width: 567px) and (max-width: 576px) and (max-width: 768px) {
+
+@media only screen and (max-width: 567px) and (max-width: 576px) and (max-width: 767px) {
     span {
         font-size: 1rem;
     }
