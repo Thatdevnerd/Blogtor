@@ -16,7 +16,7 @@ span {
 }
 
 body {
-    background: linear-gradient(155deg, dodgerblue 49%, indianred 11ch);
+    background: linear-gradient(155deg, rgb(28, 73, 150) 49%, rgb(131, 42, 42) 11ch);
     width: 100vw;
     height: 100vh;
     font-family: 'ui-rounded', "ui-monospace";
@@ -97,9 +97,10 @@ body {
     flex-direction: column;
     height: 85%;
     width: 65%;
-    background-color: rgba(64, 14, 215, 0.95);
+    background-color: rgba(64, 14, 215, 0.85);
     border-radius: 10px;
     z-index: 1;
+    border: 0.2px solid rgb(95, 0, 189);
 }
 
 .recent-blogs-left span {
@@ -112,8 +113,8 @@ body {
     text-align: center;
     background: rgb(16, 1, 151);
     color: white;
-    font-size: 2.3rem;
-    transition: 0.2s ease-in;
+    font-size: 2.2rem;
+    transition: 0.1s ease-in;
 }
 
 .recent-blogs-left span:first-child { 
