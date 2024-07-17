@@ -1,4 +1,4 @@
- * {
+* {
     margin: 0;
     padding: 0;
     overflow: hidden;
@@ -16,7 +16,9 @@ span {
 }
 
 body {
-    background: linear-gradient(155deg, rgb(28, 73, 150) 49%, rgb(131, 42, 42) 11ch);
+    background: linear-gradient( rgba(0, 0, 0, 0.15), rgba(0, 0, 0, 0.1) ), url(../media//image.png);
+    background-repeat: no-repeat;
+    background-size: cover;
     width: 100vw;
     height: 100vh;
     font-family: 'ui-rounded', "ui-monospace";
@@ -97,10 +99,11 @@ body {
     flex-direction: column;
     height: 85%;
     width: 65%;
-    background-color: rgba(64, 14, 215, 0.85);
+    background-color: rgba(179, 173, 173, 0.85);
     border-radius: 10px;
     z-index: 1;
-    border: 0.2px solid rgb(95, 0, 189);
+    border: 0.2px solid #000;
+    box-shadow: rgb(101, 137, 162) 10px 10px 10px;
 }
 
 .recent-blogs-left span {
@@ -111,17 +114,17 @@ body {
 
 .recent-blogs-left span:not(:first-child):hover {
     text-align: center;
-    background: rgb(16, 1, 151);
+    background: rgba(81, 81, 81, 0.85);
     color: white;
     font-size: 2.2rem;
     transition: 0.1s ease-in;
 }
 
 .recent-blogs-left span:first-child { 
-    border-bottom: dotted rgb(106, 1, 1);
+    border-bottom: dotted rgb(0, 0, 0);
     padding-top: 1em;
     padding-bottom: 1em;
-    background: rgb(10, 1, 97);
+    background-color: rgba(116, 114, 114, 0.85);
     z-index: 2;
 }
 
@@ -140,8 +143,8 @@ body {
     left: 0.8%;
     width: 22.5%;
     height: 5%;
-    background-color: rgb(37, 8, 125);
-    border-top: dotted rgb(106, 1, 1);
+    background-color: rgba(116, 114, 114, 0.85);
+    border-top: dotted hwb(0 0% 100%);
 }
 
 
