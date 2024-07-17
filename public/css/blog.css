@@ -99,6 +99,7 @@ body {
     width: 65%;
     background-color: rgba(64, 14, 215, 0.95);
     border-radius: 10px;
+    z-index: 1;
 }
 
 .recent-blogs-left span {
@@ -107,9 +108,11 @@ body {
 }
 
 .recent-blogs-left span:first-child { 
-    border-bottom: dotted rgb(147, 1, 1);
+    border-bottom: dotted rgb(106, 1, 1);
     padding-top: 1em;
     padding-bottom: 1em;
+    background: rgb(10, 1, 97);
+    z-index: 2;
 }
 
 .recent-blogs-left span:nth-child(odd) { font-weight: bolder; }
