@@ -90,21 +90,27 @@ body {
 
 .recent-blogs-left {
     display: flex;
-    justify-content: center;
+    justify-content: top;
+    text-align: center;
     flex-direction: column;
+    vertical-align: text-top;
     height: 100%;
     width: 65%;
     background-color: rgba(174, 59, 13, 0.9);
 }
 
 .recent-blogs-left span {
-    padding-top: 0.5rem;
-    padding-bottom: 1.5rem;
+    padding-top: 1rem;
+    padding-bottom: 1rem;
 }
 
 .recent-blogs-left span:not(:last-child) {
-    margin-top: 1rem;
     border-bottom: 2px solid black;
+    padding-top: 2rem;
+}
+
+.recent-blogs-left span:nth-child(odd) {
+    font-weight: bolder;
 }
 
 .blog-body, .blog-footer {
