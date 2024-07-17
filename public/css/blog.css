@@ -109,10 +109,10 @@ body {
 }
 
 .recent-blogs-left span:not(:first-child):hover {
-    display: flex;
     text-align: center;
     background: rgb(16, 1, 151);
     color: white;
+    font-size: 2.3rem;
     transition: 0.2s ease-in;
 }
 
