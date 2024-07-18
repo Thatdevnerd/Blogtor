@@ -144,91 +144,25 @@ body {
     width: 22.5%;
     height: 5%;
     background-color: rgba(116, 114, 114, 0.85);
-    border-top: dotted hwb(0 0% 100%);
+    border-top: dotted rgb(0, 0, 0);
 }
 
 
 .blog-body, .blog-footer { padding: 5rem; }
 
-@media (max-width: 1200px) {
-    .blog-card-wrapper {
-        width: 60vw;
-        height: 50vh;
+@media only screen and (min-width: 870px) and (max-width: 1679px) {
+    .recent-blogs-left {
+        width: 80%;
     }
-
-    .blog-card {
-        font-size: 1.8rem;
-    }
-
-    .nav-wrapper ul {
-        gap: 2rem;
+    
+    span {
+        font-size: 1rem;
     }
 }
 
-@media (max-width: 992px) {
-    .blog-card-wrapper {
-        width: 70vw;
-        height: 55vh;
+@media only screen and (min-width: 1680px) {
+    .recent-blogs-left {
+        width: 65%;
+        font-size: 2rem;
     }
-
-    .blog-card {
-        font-size: 1.6rem;
-    }
-
-    .nav-wrapper ul {
-        gap: 1.5rem;
-    }
-}
-
-@media (max-width: 768px) {
-    .blog-card-wrapper {
-        width: 80vw;
-        height: 60vh;
-    }
-
-    .blog-card {
-        font-size: 1.4rem;
-    }
-
-    .nav-wrapper ul {
-        gap: 1rem;
-    }
-
-    .horizontal-nav {
-        height: 10vh;
-    }
-}
-
-@media (max-width: 576px) {
-    .blog-card-wrapper {
-        width: 90vw;
-        height: 65vh;
-    }
-
-    .blog-card {
-        font-size: 1.2rem;
-    }
-
-    .nav-wrapper ul {
-        gap: 0.5rem;
-    }
-
-    .blog-body, .blog-footer {
-        padding: 2rem;
-    }
-}
-
-@media (max-width: 480px) {
-    .blog-card-wrapper {
-        width: 100vw;
-        height: 70vh;
-    }
-
-    .nav-wrapper ul {
-        flex-direction: column;
-        gap: 0.5rem;
-    }
-
-    .blog-card { font-size: 1rem; }
-    .blog-body, .blog-footer { padding: 1rem; }
 }
