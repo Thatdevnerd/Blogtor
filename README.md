@@ -1,1 +1,1 @@
-# symfony7-blog
+# Readme coming soon :)
