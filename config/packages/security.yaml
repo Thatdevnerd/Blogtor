@@ -38,7 +38,6 @@ security:
     # Note: Only the *first* access control that matches will be used
     access_control:
          - { path: /blog/^, roles: ROLE_ADMIN, methods: [GET], requires_channel: https }
-         - { path: ^/2fa, role: IS_AUTHENTICATED_2FA_IN_PROGRESS }
 
 when@test:
     security:
